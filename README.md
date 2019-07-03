@@ -1,3 +1,6 @@
+### 数据库
+
+```
 CREATE TABLE IF NOT EXISTS user(
 	uid INT PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(255) UNIQUE NOT NULL,
@@ -16,4 +19,4 @@ CREATE TABLE IF NOT EXISTS user(
 | email  | varchar(255) | YES  |     | NULL    |                |
 +--------+--------------+------+-----+---------+----------------+
 
-
+```
