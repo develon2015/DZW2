@@ -62,10 +62,10 @@ th, td {
 			<tr>
 				<td>*手机号:</td>
 				<td rowspan="2"><input width="auto" type="password" required="required"
-					autocomplete="tel" id="telephone" name="telephone"></td>
+					autocomplete="tel" id="phone" name="phone"></td>
 			</tr>
 			<tr>
-				<td rowspan="1"><font size="1sp">输入您的手机号码</font></td>
+				<td rowspan="1"><font size="1sp">11位数的手机号码</font></td>
 			</tr>
 			<tr>
 				<td>&nbsp;邮箱:</td>
