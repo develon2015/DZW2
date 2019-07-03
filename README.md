@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS user(
 	passwd VARCHAR(255) NOT NULL,
 	phone VARCHAR(255) NOT NULL,
 	email VARCHAR(255) DEFAULT NULL
-);
+)DEFAULT CHARSET=UTF8;
 
 +--------+--------------+------+-----+---------+----------------+
 | Field  | Type         | Null | Key | Default | Extra          |
