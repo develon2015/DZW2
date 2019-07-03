@@ -6,7 +6,7 @@
 <!DOCTYPE HTML>
 <html lang="zh">
 <head>
-<title>轻松短租网 - 注册结果</title>
+<title>轻松短租网 - 注册成功</title>
 <style type="text/css">
 body {
 	text-align: center;
@@ -21,18 +21,7 @@ th, td {
 </head>
 
 <body>
-	<%
-		String register_result = (String) request.getAttribute("register_result");
-		if (register_result != null) {
-	%>
-	<h2>Sorry, <%=register_result%></h2>
-	<%
-		} else {
-	%>
 	<h2>注册成功, 立即<a href="${ pageContext.request.contextPath }/user/login.html">登录</a></h2>
-	<%
-		}
-	%>
 	
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>

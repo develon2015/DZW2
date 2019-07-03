@@ -16,6 +16,31 @@ import common.SysUtil;
 
 @Controller
 public class RegisterController {
+	private static final String sqlA = "INSERT INTO user(name, passwd, phone, email) VALUE(?, MD5(MD5(?)), ?, NULL)";
+	private static final String sqlB = "INSERT INTO user(name, passwd, phone, email) VALUE(?, MD5(MD5(?)), ?, ?)";
+	private static PreparedStatement psmtA = null;
+	private static PreparedStatement psmtB = null;
+	
+	private PreparedStatement getPsmt(String email) {
+		try {
+		if (email == null || "".equals(email)) {
+			// A
+			if (psmtA == null || !DBI.isValid()) {
+				psmtA = DBI.getConnection().prepareStatement(sqlA);
+			}
+			return psmtA;
+		} else {
+			// B
+			if (psmtB == null || !DBI.isValid()) {
+				psmtB = DBI.getConnection().prepareStatement(sqlB);
+			}
+			return psmtB;
+		}
+		} catch(Exception e) {
+			SysUtil.log(e);
+		}
+		return null;
+	}
 
 	private boolean register(String name, String passwd, String phone, String email) {
 		/*
@@ -29,13 +54,9 @@ public class RegisterController {
 | email  | varchar(255) | YES  |     | NULL    |                |
 +--------+--------------+------+-----+---------+----------------+
 		 */
-		String sql = String.format("INSERT INTO user(name, passwd, phone, email) VALUE(?, MD5(MD5(?)), ?, %s)", 
-				(email == null || "".equals(email)) ? "NULL" : "?");
-		SysUtil.log("sql", sql);
-		PreparedStatement psmt = null;
+		PreparedStatement psmt = getPsmt(email);
 		try {
 			//
-			psmt = DBI.getConnection().prepareStatement(sql);
 			psmt.setString(1, name);
 			psmt.setString(2, passwd + name + new Date().toString()); // √‹¬Îº”√‹
 			psmt.setString(3, phone);
@@ -46,9 +67,7 @@ public class RegisterController {
 			psmt.execute();
 		} catch (Exception e) {
 			SysUtil.log(e);
-			throw new RuntimeException("Œ¥÷™¥ÌŒÛ");
-		} finally {
-			try { psmt.close(); } catch(Exception e) {}
+			throw new RuntimeException(e.getMessage());
 		}
 		return true;
 	}

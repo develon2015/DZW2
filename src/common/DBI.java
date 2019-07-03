@@ -10,7 +10,7 @@ public class DBI {
 	static {
 		// 加载数据库驱动类库
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			Class.forName(SysUtil.get("jdbc_driver")).newInstance();
 		} catch (Throwable e) {
 			SysUtil.log(e);
 		}
@@ -22,9 +22,20 @@ public class DBI {
 		}
 	}
 	
+	public static boolean isValid() {
+		try {
+			if (conn.isValid(0)) {
+				return true;
+			}
+		} catch (SQLException e) {
+			SysUtil.log(e);
+		}
+		return false;
+	}
+	
 	public static Connection getConnection() {
 		try {
-			if (conn == null || conn.isClosed()) {
+			if (conn == null || !conn.isValid(0)) {
 				conn = DriverManager.getConnection(SysUtil.get("db_url"));
 			}
 		} catch (SQLException e) {
