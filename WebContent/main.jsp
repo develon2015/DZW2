@@ -5,7 +5,7 @@
 <%
 	SysUtil.test();
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,8 +15,31 @@
 <style type="text/css">
 	#title {
 		color: pink;
-		text-shadow: -1px 0 black, 0 2px black, 1px 0 black, 0 -1px black}
-		
+		text-shadow: -1px 0 black, 0 2px black, 1px 0 black, 0 -1px black;
+	}
+	
+	font {
+		color: white;
+		text-shadow: black 0.1em 0.1em 0.2em;
+	}
+	
+	#search {
+		height: 24px;
+		width: 600px;
+		margin-top: 20px;
+	}
+	
+	#search-icon{
+		text-align: center;
+		background: none;
+		color: #ffffff;
+		font-size: 16px;
+		white-space: normal;
+		margin-top: 0px;
+		border: none;
+		border-color: #4CAF50;
+		border-radius: 0px;
+		outline: none;
 	}
 </style>
 </head>
@@ -26,10 +49,23 @@
 		User user = (User) request.getAttribute("user");
 		if (user == null) {
 	%>
-			<a href="${ pageContext.request.contextPath }/user/register.html">注册</a>&nbsp;/&nbsp;<a href="${ pageContext.request.contextPath }/user/login.html">登录</a>
+			<a href="${ pageContext.request.contextPath }/user/login.html">登录</a>&nbsp;/&nbsp;<a href="${ pageContext.request.contextPath }/user/register.html">注册</a>
 	<% } else { %>
+			<a href="${ pageContext.request.contextPath }/user/logout.html">${ user.name }</a>
+			&nbsp;
 			<a href="${ pageContext.request.contextPath }/user/logout.html">退出</a>
+			&nbsp;
+			<a href="${ pageContext.request.contextPath }/user/logout.html">免费发布房间</a>
 	<% } %>
+	<p/>
+	<div>
+	<form id="search-form" action="${ pageContext.request.contextPath }/search.html">
+      <input id="search" autocomplete="text" placeholder="请输入要搜索的内容" name="q">
+      <button id="search-icon" type="submit">
+      	<font>搜索</font>
+      </button>
+    </form>
+    </div>
 	
 	<div class="footer">
 		<a href="${ pageContext.request.contextPath }/index.html">首页</a><br>

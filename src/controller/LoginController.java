@@ -33,6 +33,8 @@ public class LoginController {
 	public static User getUser(HttpServletRequest request, HttpServletResponse response) {
 		String uid = null;
 		Cookie[] cs = request.getCookies();
+		if (cs == null)
+			return null;
 		for (Cookie c : cs) {
 			if ("uid".equals(c.getName()) ) {
 				uid = c.getValue();
