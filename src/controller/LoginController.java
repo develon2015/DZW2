@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import common.DBI;
+import common.HttpTools;
 import common.SysUtil;
 import user.User;
 
@@ -121,6 +122,16 @@ public class LoginController {
 			}
 			mv.addObject("login_result", "µ«¬º ß∞‹, «Î÷ÿ ‘");
 			return mv;
+		}
+		return mv;
+	}
+	
+	@RequestMapping("/user/logout")
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("redirect:/index.html");
+		String uid = HttpTools.getCookie(request, "uid");
+		if (uid != null) {
+			userList.remove(uid);
 		}
 		return mv;
 	}

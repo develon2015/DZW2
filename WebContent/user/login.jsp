@@ -15,10 +15,15 @@ th, td {
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
+<style type="text/css">
+	#warning {
+		color: red;
+	}
+</style>
 </head>
 <body>
-	<h1>登录到您的短租账户</h1>
-	<h2>${ login_result }</h2>
+	<h2>登录到您的短租账户</h2>
+	<h3 id="warning">${ login_result }</h3>
 	<form action="?request=login" method="post">
 		<table style="margin: auto">
 			<tr>
