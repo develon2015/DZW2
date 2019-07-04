@@ -18,14 +18,7 @@ th, td {
 </head>
 <body>
 	<h1>登录到您的短租账户</h1>
-	<%
-		String login_result = (String) request.getAttribute("login_result");
-		if (login_result != null) {
-	%>
-	<h2>Sorry, <%=login_result%></h2>
-	<%
-		}
-	%>
+	<h2>${ login_result }</h2>
 	<form action="?request=login" method="post">
 		<table style="margin: auto">
 			<tr>

@@ -2,7 +2,6 @@ package controller;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.PreparedStatement;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,13 +57,15 @@ public class RegisterController {
 		try {
 			//
 			psmt.setString(1, name);
-			psmt.setString(2, passwd + name + new Date().toString()); // 密码加密
+			psmt.setString(2, passwd + name); // 密码加密
 			psmt.setString(3, phone);
 			if (email != null && !"".equals(email)) {
 				psmt.setString(4, email);
 			}
 			SysUtil.log("注册", psmt.toString());
-			psmt.execute();
+			int i = psmt.executeUpdate();
+			if (i != 1)
+				throw new RuntimeException("请稍后再试");
 		} catch (Exception e) {
 			SysUtil.log(e);
 			throw new RuntimeException(e.getMessage());
@@ -90,6 +91,13 @@ public class RegisterController {
 			String name = request.getParameter("name"), passwd = request.getParameter("passwd"),
 					passwd2 = request.getParameter("passwd2"), phone = request.getParameter("phone"),
 					email = request.getParameter("email");
+			try {
+				name = name.trim();
+				passwd = passwd.trim();
+				passwd2 = passwd2.trim();
+				phone = phone.trim();
+				email = email.trim();
+			} catch(Exception e) {}
 
 			if (name == null || passwd == null || passwd2 == null || phone == null
 					 || "".equals(name) || "".equals(passwd) || "".equals(passwd2) || "".equals(phone)) {
@@ -102,7 +110,7 @@ public class RegisterController {
 				return mv;
 			}
 			
-			if (!phone.matches("^(\\d){11}$")) {
+			if (!phone.matches("^1(\\d){10}$")) {
 				mv.addObject("register_result", "注册失败, 手机号不正确");
 				return mv;
 			}

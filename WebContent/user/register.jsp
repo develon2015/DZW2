@@ -61,7 +61,7 @@ th, td {
 			</tr>
 			<tr>
 				<td>*手机号:</td>
-				<td rowspan="2"><input width="auto" type="password" required="required"
+				<td rowspan="2"><input width="auto" type="number" required="required"
 					autocomplete="tel" id="phone" name="phone"></td>
 			</tr>
 			<tr>
@@ -69,7 +69,7 @@ th, td {
 			</tr>
 			<tr>
 				<td>&nbsp;邮箱:</td>
-				<td rowspan="2"><input width="auto" type="password"
+				<td rowspan="2"><input width="auto" type="email"
 					autocomplete="email" id="email" name="email"></td>
 			</tr>
 			<tr>

@@ -19,15 +19,15 @@ public class SysUtil {
 	}
 	
 	public static void log(Throwable e) {
-		System.out.println("发生了异常 -> " + " (" + e.toString() + ")");
+		System.out.println("发生了异常 -> " + " (" + (e == null ? "null" : e.getMessage()) + ")");
 	}
 	
 	public static void log(String e) {
-		System.out.println("[I] " + e);
+		System.out.println("[I] " + (e == null ? "null" : e.toString()) );
 	}
 
-	public static void log(String label, String e) {
-		System.out.println("[I] " + label + " -> " + e);
+	public static void log(String label, Object e) {
+		System.out.println("[I] " + label + " -> " + (e == null ? "null" : e.toString()) );
 	}
 	
 	/**

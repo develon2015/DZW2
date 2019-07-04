@@ -33,6 +33,10 @@ public class DBI {
 		return false;
 	}
 	
+	/**
+	 * 返回数据库连接, 如果数据库不可用, 则重新连接
+	 * @return
+	 */
 	public static Connection getConnection() {
 		try {
 			if (conn == null || !conn.isValid(0)) {
