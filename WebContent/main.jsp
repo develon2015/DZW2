@@ -60,7 +60,7 @@
 	<p/>
 	<div>
 	<form id="search-form" action="${ pageContext.request.contextPath }/search.html">
-      <input id="search" autocomplete="text" placeholder="请输入要搜索的内容" name="q">
+      <input id="search" autocomplete="off" placeholder="请输入要搜索的内容" name="q">
       <button id="search-icon" type="submit">
       	<font>搜索</font>
       </button>

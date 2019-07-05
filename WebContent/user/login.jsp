@@ -37,7 +37,7 @@ th, td {
 			<tr>
 				<td>*密码:</td>
 				<td rowspan="2"><input width="auto" type="password" required="required"
-					autocomplete="new-password" id="passwd" name="passwd"></td>
+					autocomplete="password" id="passwd" name="passwd"></td>
 			</tr>
 			<tr>
 				<td rowspan="1"><font size="1sp">6-12个字符</font></td>
