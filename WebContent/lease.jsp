@@ -31,12 +31,40 @@
 			<tr>
 				<th>*房屋名称:</th>
 				<td><input style="width: 500px;" type="text" autocomplete="off" name="name"></td>
+			</tr>
+			<tr>
+				<th>*最短时间:</th>
+				<td><input type="number" autocomplete="off" maxlength="6" name="time_short">&nbsp;天</td>
+				<th>*最长时间:</th>
+				<td><input type="number" autocomplete="off" maxlength="6" name="time_long">&nbsp;天</td>
+			</tr>
+			<tr>
+				<th>*面积:</th>
+				<td><input type="number" autocomplete="off" maxlength="6" name="area">&nbsp;平方</td>
 				<th>*价格:</th>
-				<td><input autocomplete="off" name="name">元/天</td>
+				<td><input type="number" autocomplete="off" maxlength="6" name="price">&nbsp;元/天</td>
 			</tr>
 			<tr>
 				<th>*地址:</th>
-				<td><input style="width: 500px;" autocomplete="address" name="name"></td>
+				<td><input style="width: 500px;" autocomplete="address" name="address"></td>
+			</tr>
+			<tr>
+				<th>*详细描述:</th>
+				<td>
+					<textarea rows="10" cols="69" name="info"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>*联系人:</th>
+				<td>
+					<input style="width: 200px;" type="text" autocomplete="off" maxlength="5" name="tel_name">
+				</td>
+			</tr>
+			<tr>
+				<th>*联系方式:</th>
+				<td>
+					<input style="width: 200px;" type="number" autocomplete="off" maxlength="11" name="tel_num">
+				</td>
 			</tr>
 			<tr>
 				<th>&nbsp;&nbsp;图片:</th>
@@ -48,7 +76,7 @@
 			</tr>
 		</table>
 		<br>
-	    <input type="submit" value="发布" />
+	    <button type="submit">确认</button>
 	</form>
 	
 

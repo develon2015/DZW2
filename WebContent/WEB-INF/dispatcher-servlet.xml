@@ -11,6 +11,8 @@
 
     <context:component-scan base-package="controller"/>
 
-    <!-- ... -->
-
+	<bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">       
+    </bean>
+    
 </beans>

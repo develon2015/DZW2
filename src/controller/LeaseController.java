@@ -12,7 +12,11 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import common.SysUtil;
+import user.User;
 
 @Controller
 public class LeaseController {
@@ -23,6 +27,10 @@ public class LeaseController {
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
     private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+    
+    private void logic() {
+    	//
+    }
 	
 	@RequestMapping("/lease")
 	public ModelAndView lease(HttpServletRequest request, HttpServletResponse response) {
@@ -30,9 +38,36 @@ public class LeaseController {
 		ModelAndView mv = new ModelAndView("/lease.jsp");
 		if ("upload".equals(request.getParameter("request")) ) {
 			// 处理发布
+			// 判断登录情况
+			User user = LoginController.getUser(request, response);
+			if (user == null) {
+//				mv.setViewName("redirect:/user/login.html");
+//				return mv;
+			}
+			
+			/*
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(255) | NO   |     | NULL    |                |
+| area       | double       | NO   |     | NULL    |                |
+| time_short | int(11)      | NO   |     | NULL    |                |
+| time_long  | int(11)      | NO   |     | NULL    |                |
+| price      | double       | NO   |     | NULL    |                |
+| info       | text         | NO   |     | NULL    |                |
+| tel_name   | varchar(255) | NO   |     | NULL    |                |
+| tel_num    | varchar(255) | NO   |     | NULL    |                |
+| enable     | tinyint(1)   | YES  |     | 0       |                |
+| uid_master | int(11)      | NO   |     | NULL    |                |
+| uid_guest  | int(11)      | YES  |     | NULL    |                |
+| image      | text         | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+			 */
+			
 			try {
-				saveImg(request, response);
-			} catch (IOException e) {
+				//saveImg(request, response);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			mv.addObject("result", "失败");
@@ -40,8 +75,8 @@ public class LeaseController {
 		return mv;
 	}
 	
-	private void saveImg(HttpServletRequest request,
-	        HttpServletResponse response) throws IOException {
+	// 处理上传文件
+	private void saveImg(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 检测是否为多媒体上传
         if (!ServletFileUpload.isMultipartContent(request)) {
             // 如果不是则停止
