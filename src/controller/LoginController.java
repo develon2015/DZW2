@@ -52,6 +52,16 @@ public class LoginController {
 		}
 		return null;
 	}
+
+	/**
+	 * 返回当前登录用户
+	 * @param uid
+	 * @return
+	 * 		null 用户未登录
+	 */
+	public static User getUser(int uid) {
+		return userList.get("" + uid);
+	}
 	
 	@RequestMapping("/index")
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -137,4 +147,5 @@ public class LoginController {
 		}
 		return mv;
 	}
+
 }

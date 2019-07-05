@@ -69,3 +69,12 @@ a {
 
 a:hover {
 }
+
+font {
+	color: white;
+	text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.warning {
+		color: red;
+}

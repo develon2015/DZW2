@@ -5,7 +5,13 @@ import javax.servlet.http.HttpServletRequest;
 
 public class HttpTools {
 	
-	// 查询cookie值
+	/** 
+	 * 查询cookie值
+	 * @param request
+	 * @param key
+	 * @return
+	 * 	null 没有该cookie值
+	 */
 	public static String getCookie(HttpServletRequest request, String key) {
 		if (key == null || "".equals(key))
 			return null;

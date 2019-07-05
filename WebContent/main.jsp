@@ -51,11 +51,11 @@
 	%>
 			<a href="${ pageContext.request.contextPath }/user/login.html">登录</a>&nbsp;/&nbsp;<a href="${ pageContext.request.contextPath }/user/register.html">注册</a>
 	<% } else { %>
-			<a href="${ pageContext.request.contextPath }/user/logout.html">${ user.name }</a>
+			<a href="${ pageContext.request.contextPath }/user/show.html">${ user.name }</a>
 			&nbsp;
 			<a href="${ pageContext.request.contextPath }/user/logout.html">退出</a>
 			&nbsp;
-			<a href="${ pageContext.request.contextPath }/user/logout.html">免费发布房间</a>
+			<a href="${ pageContext.request.contextPath }/lease.html">免费发布房间</a>
 	<% } %>
 	<p/>
 	<div>

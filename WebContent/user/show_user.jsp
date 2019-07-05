@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html lang="zh">
 <head>
-<title>轻松短租网</title>
+<title>轻松短租网 - ${ user }</title>
 <style type="text/css">
 body {
 	text-align: center;
@@ -13,7 +13,7 @@ body {
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
 </head>
 <body>
-	<h1>标题</h1>
+	<h1>查看${ user }的短租账户</h1>
 
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>

@@ -29,7 +29,7 @@ th, td {
 			<tr>
 				<td>*用户名:</td>
 				<td rowspan="2"><input width="auto" type="text" required="required"
-					autocomplete="username" id="name" name="name"></td>
+					autocomplete="off" id="name" name="name"></td>
 			</tr>
 			<tr>
 				<td rowspan="1"><font size="1sp">4-20个字符</font></td>

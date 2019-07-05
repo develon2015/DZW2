@@ -13,7 +13,7 @@ body {
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
 </head>
 <body>
-	<h1>标题</h1>
+	<h1>搜索"${ q }"结果</h1>
 
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>
