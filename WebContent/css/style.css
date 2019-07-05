@@ -32,8 +32,8 @@ button {
 }
 
 button:hover {
-	cursor: pointer; /* 灏忔墜 */
-	background-color: pink; /* 绮夌孩 */
+	cursor: pointer; /* 鐏忓繑澧� */
+	background-color: pink; /* 缁瀛� */
 }
 
 h1 h2 h3 {
@@ -77,4 +77,9 @@ font {
 
 .warning {
 		color: red;
+}
+
+h1, h2 {
+	color: white;
+	text-shadow: -1px 0 pink, 0 2px black, 1px 0 pink, 0 -1px pink;
 }

@@ -16,6 +16,7 @@
 	#title {
 		color: pink;
 		text-shadow: -1px 0 black, 0 2px black, 1px 0 black, 0 -1px black;
+		font-size: 3em;
 	}
 	
 	font {
@@ -24,7 +25,7 @@
 	}
 	
 	#search {
-		height: 24px;
+		height: 28px;
 		width: 600px;
 		margin-top: 20px;
 	}

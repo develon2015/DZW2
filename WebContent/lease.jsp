@@ -23,7 +23,7 @@
 </head>
 <body>
 	<h2>发布出租屋</h2>
-	<h2 class="warning">${ result }</h2>
+	<h3 class="warning">${ result }</h3>
 	
 	<form method="post" action="?request=upload" enctype="multipart/form-data">
 		<br>
@@ -34,15 +34,15 @@
 			</tr>
 			<tr>
 				<th>*最短时间:</th>
-				<td><input type="number" autocomplete="off" maxlength="6" name="time_short">&nbsp;天</td>
+				<td><input type="number" min="1" autocomplete="off" maxlength="6" name="time_short">&nbsp;天</td>
 				<th>*最长时间:</th>
-				<td><input type="number" autocomplete="off" maxlength="6" name="time_long">&nbsp;天</td>
+				<td><input type="number" min="1" autocomplete="off" maxlength="6" name="time_long">&nbsp;天</td>
 			</tr>
 			<tr>
 				<th>*面积:</th>
-				<td><input type="number" autocomplete="off" maxlength="6" name="area">&nbsp;平方</td>
+				<td><input type="number" step="0.01" min="1" autocomplete="off" maxlength="6" name="area">&nbsp;m<sup>2</sup></td>
 				<th>*价格:</th>
-				<td><input type="number" autocomplete="off" maxlength="6" name="price">&nbsp;元/天</td>
+				<td><input type="number" step="0.01" min="1" autocomplete="off" maxlength="6" name="price">&nbsp;元/天</td>
 			</tr>
 			<tr>
 				<th>*地址:</th>
@@ -63,7 +63,7 @@
 			<tr>
 				<th>*联系方式:</th>
 				<td>
-					<input style="width: 200px;" type="number" autocomplete="off" maxlength="11" name="tel_num">
+					<input style="width: 200px;" type="number" min="1" autocomplete="off" maxlength="11" name="tel_num">
 				</td>
 			</tr>
 			<tr>
