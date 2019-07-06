@@ -3,13 +3,17 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
@@ -30,18 +34,14 @@ public class LeaseController {
 	private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
 	private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
 
-	private void logic() {
-		//
-	}
-
 	private static PreparedStatement psmt = null;
 	private static final String sql = "INSERT INTO house"
 			+ "(name, pn, time_short, time_long, area, price, "
-			+ " address, info, tel_name, tel_num, uid_master) "
-			+ "VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ " address, info, tel_name, tel_num, uid_master, date) "
+			+ "VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	@RequestMapping("/lease")
 	public ModelAndView lease(HttpServletRequest request, HttpServletResponse response) {
-		
+		this.request = request;
 		ModelAndView mv = new ModelAndView("/lease.jsp");
 		// 判断登录情况
 		User user = LoginController.getUser(request, response);
@@ -50,13 +50,26 @@ public class LeaseController {
 			mv.addObject("result", "您尚未登录, 请先<a href=\"" + request.getContextPath() + "/user/login.html\">登录</a>后再发布出租屋");
 			return mv;
 		}
+		System.out.println(getParameter("name"));
+		System.out.println(request.getParameter("request"));
 		
 		try {
 			// 处理发布
 			if ("upload".equals(request.getParameter("request")) ) {
 				// 拒绝服务检测
-				if ("".equals(request.getParameter("name").trim()) || "".equals(request.getParameter("name").trim()) ) {
+				if ("".equals(getParameter("name").trim()) || "".equals(getParameter("name").trim()) ) {
 					mv.addObject("result", "请仔细填写");
+					return mv;
+				}
+				int ts = Integer.parseInt(getParameter("time_short"));
+				int tl = Integer.parseInt(getParameter("time_long"));
+				if (ts > tl) {
+					mv.addObject("result", "最短出租时间不能大于最长出租时间");
+					return mv;
+				}
+				if (false)
+				if (!getParameter("tel_num").matches("^1[3578](\\d){9}$")) {
+					mv.addObject("result", "联系方式不正确");
 					return mv;
 				}
 				
@@ -84,23 +97,52 @@ public class LeaseController {
 | ?image      | text         | YES  |     | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------*/
 						psmt.clearParameters();
-						psmt.setString(1, request.getParameter("name"));
-						psmt.setInt(2, Integer.parseInt(request.getParameter("pn")) );
-						psmt.setInt(3, Integer.parseInt(request.getParameter("time_short")) );
-						psmt.setInt(4, Integer.parseInt(request.getParameter("time_long")) );
-						psmt.setDouble(5, Double.parseDouble(request.getParameter("area")) );
-						psmt.setDouble(6, Double.parseDouble(request.getParameter("price")) );
-						psmt.setString(7, request.getParameter("address"));
-						psmt.setString(8, request.getParameter("info"));
-						psmt.setString(9, request.getParameter("tel_name"));
-						psmt.setString(10, request.getParameter("tel_num"));
+						ResultSet rs = psmt.executeQuery("SELECT now()");
+						Timestamp date = null;
+						if (rs.next()) {
+							date = rs.getTimestamp(1);
+							System.out.println(date);
+						}
+						psmt.clearParameters();
+						psmt.setString(1, getParameter("name"));
+						psmt.setInt(2, Integer.parseInt(getParameter("pn")) );
+						psmt.setInt(3, Integer.parseInt(getParameter("time_short")) );
+						psmt.setInt(4, Integer.parseInt(getParameter("time_long")) );
+						psmt.setDouble(5, Double.parseDouble(getParameter("area")) );
+						psmt.setDouble(6, Double.parseDouble(getParameter("price")) );
+						psmt.setString(7, getParameter("address"));
+						psmt.setString(8, getParameter("info"));
+						psmt.setString(9, getParameter("tel_name"));
+						psmt.setString(10, getParameter("tel_num"));
 						psmt.setInt(11, user.getUid());
+						psmt.setTimestamp(12, date);
 						int r = psmt.executeUpdate();
 						if (r != 1) {
 							mv.addObject("result", "请稍后再试");
 							return mv;
 						}
+						
+						// 处理文件上传
+						try {
+							PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT id FROM house WHERE uid_master=? AND date=? AND name=?");
+							psmt.setInt(1, user.getUid());
+							psmt.setTimestamp(2, date);
+							psmt.setString(3, request.getParameter("name"));
+							SysUtil.log("文件长传", psmt);
+							ResultSet rs_id = psmt.executeQuery();
+							if (!rs_id.next()) {
+								SysUtil.log("查询house id失败");
+								return mv;
+							}
+							int id = rs_id.getInt("id");
+							System.out.println("id -> " + id);
+							saveImg(request, response, "" + id);
+						} catch(Exception e) {
+							SysUtil.log(e);
+						}
+						
 						// 返回结果
+						mv.setViewName("lease_succeed.jsp");
 						mv.addObject("result", "成功!");
 						return mv;
 				} catch(SQLException e) {
@@ -116,67 +158,113 @@ public class LeaseController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping("upload.html")
+	public String uploadTest(HttpServletRequest request, HttpServletResponse response) {
+		this.request = request;
+		SysUtil.log(getParameter("info"));
+		try {
+			String s = saveImg(request, response, "");
+			request.setAttribute("info", "result:" + s);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/upload.jsp";
+	}
 
 	// 处理上传文件
-	private void saveImg(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// 检测是否为多媒体上传
-		if (!ServletFileUpload.isMultipartContent(request)) {
-			// 如果不是则停止
-			return;
-		}
-
-		// 配置上传参数
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		// 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
-		factory.setSizeThreshold(MEMORY_THRESHOLD);
-		// 设置临时存储目录
-		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-
-		ServletFileUpload upload = new ServletFileUpload(factory);
-
-		// 设置最大文件上传值
-		upload.setFileSizeMax(MAX_FILE_SIZE);
-
-		// 设置最大请求值 (包含文件和表单数据)
-		upload.setSizeMax(MAX_REQUEST_SIZE);
-
-		// 中文处理
-		upload.setHeaderEncoding("UTF-8");
-
-		// 构造临时路径来存储上传的文件
-		// 这个路径相对当前应用的目录
-		String uploadPath = request.getSession().getServletContext().getRealPath(File.separator) + UPLOAD_DIRECTORY;
-
-		// 如果目录不存在则创建
-		File uploadDir = new File(uploadPath);
-		if (!uploadDir.exists()) {
-			uploadDir.mkdir();
-		}
-
+	private String saveImg(HttpServletRequest request, HttpServletResponse response, String hid) throws IOException {
 		try {
-			// 解析请求的内容提取文件数据
-			List<FileItem> formItems = upload.parseRequest(request);
-
 			if (formItems != null && formItems.size() > 0) {
+				List<String> list = new ArrayList<String>();
 				// 迭代表单数据
 				for (FileItem item : formItems) {
 					// 处理不在表单中的字段
 					if (!item.isFormField()) {
-						String fileName = new File(item.getName()).getName();
+						if ("".equals(item.getName()) )
+								continue;
+						String fileName = new File(hid + "_" + item.getName()).getName().replaceAll(":", "_");
 						String filePath = uploadPath + File.separator + fileName;
 						File storeFile = new File(filePath);
-						// 在控制台输出文件的上传路径
-						System.out.println(filePath);
 						// 保存文件到硬盘
 						item.write(storeFile);
-						request.setAttribute("message", "文件上传成功!");
+						SysUtil.log("上传成功", filePath);
+						list.add(filePath);
 					}
 				}
+				
+				String image = "";
+				for (int i = 0; i < list.size(); i ++ ) {
+					image += list.get(i) + ":";
+				}
+				
+				SysUtil.log(image);
+				return image;
 			}
 		} catch (Exception ex) {
 			request.setAttribute("message", "错误信息: " + ex.getMessage());
 		}
-		// 跳转到 message.jsp
-
+		return null;
+	}
+	
+	private HttpServletRequest request;
+	private String uploadPath;
+	private List<FileItem> formItems;
+	private String getParameter(String key) {
+			// 检测是否为多媒体上传
+			if (!ServletFileUpload.isMultipartContent(request)) {
+				// 如果不是则停止
+				return null;
+			}
+	
+			// 配置上传参数
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			// 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
+			factory.setSizeThreshold(MEMORY_THRESHOLD);
+			// 设置临时存储目录
+			factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+	
+			ServletFileUpload upload = new ServletFileUpload(factory);
+	
+			// 设置最大文件上传值
+			upload.setFileSizeMax(MAX_FILE_SIZE);
+	
+			// 设置最大请求值 (包含文件和表单数据)
+			upload.setSizeMax(MAX_REQUEST_SIZE);
+	
+			// 中文处理
+			upload.setHeaderEncoding("UTF-8");
+	
+			// 构造临时路径来存储上传的文件
+			// 这个路径相对当前应用的目录
+			if (uploadPath == null) {
+				uploadPath = request.getSession().getServletContext().getRealPath(File.separator) + UPLOAD_DIRECTORY;
+				SysUtil.log("上传目录", uploadPath);
+				// 如果目录不存在则创建
+				File uploadDir = new File(uploadPath);
+				if (!uploadDir.exists()) {
+					uploadDir.mkdir();
+				}
+			}
+			// 解析请求的内容提取文件数据
+			try {
+				this.formItems = upload.parseRequest(request);
+			} catch (FileUploadException e) {
+				e.printStackTrace();
+			}
+		
+		if (formItems != null && formItems.size() > 0) {
+			// 迭代表单数据
+			for (FileItem item : formItems) {
+				// 处理在表单中的字段
+				if (item.isFormField()) {
+					SysUtil.log(item.getFieldName(), item.getString());
+					if (key.equals(item.getFieldName()) ) {
+						return item.getString();
+					}
+				}
+			}
+		}
+		return "失败的取值";
 	}
 }

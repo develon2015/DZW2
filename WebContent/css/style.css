@@ -6,7 +6,7 @@ body {
 	text-align: center;
 	border-radius: 40px;
 	/*background-color: #cccccc;*/
-	background: linear-gradient(to right, pink, white, pink);
+	background: linear-gradient(to right, #eeeeee, white, #eeeeee);
 }
 
 div.footer {
@@ -54,12 +54,12 @@ input {
 }
 
 input:required {
-	background-color: pink;
+	#background-color: pink;
 }
 
 input:invalid {
-	border: 2px solid pink;
-	border: none;
+	#border: 2px solid pink;
+	#border: none;
 }
 
 a {

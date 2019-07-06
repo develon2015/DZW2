@@ -61,7 +61,8 @@
 	<p/>
 	<div>
 	<form id="search-form" action="${ pageContext.request.contextPath }/search.html">
-      <input id="search" autocomplete="off" placeholder="请输入要搜索的内容" name="q">
+      <input id="search" autocomplete="off" 
+      	placeholder="请输入要搜索的内容, 如&quot;北京 四合院&quot;、&quot;中南海 别墅&quot;、&quot;武汉 旅馆&quot;__" name="q">
       <button id="search-icon" type="submit">
       	<font>搜索</font>
       </button>
@@ -71,6 +72,41 @@
 	<div class="footer">
 		<a href="${ pageContext.request.contextPath }/index.html">首页</a><br>
 	</div>
+	
 </body>
+	<script type="text/javascript" defer="defer">
+		var a = document.getElementById("search");
+		//console.log(a.placeholder);
+		
+		var title = a.placeholder; // 完整标题
+		var i = 0;
+
+		function t() {
+			a.placeholder = title.substr(0, i);
+			i ++ ;
+			if (i >= title.length + 10)
+				i = 0;
+			setTimeout(t, 100);
+		}
+		
+		setTimeout(t, 100);
+		
+		var b = document.getElementById("title");
+		//console.log(b.innerText);
+		
+		var title2 = b.innerText; // 完整标题
+		var i2 = 1;
+
+		function t2() {
+			b.innerText = title2.substr(0, i2);
+			//console.log(b.innerText);
+			i2 ++ ;
+			if (i2 >= title2.length + 60)
+				i2 = 1;
+			setTimeout(t2, 100);
+		}
+		
+		setTimeout(t2, 1);
+	</script>
 </html>
 <%@page trimDirectiveWhitespaces="true"%>

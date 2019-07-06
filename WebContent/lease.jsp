@@ -9,20 +9,24 @@
 		text-align: center;
 	}
 	
-	body {
-		text-align: center;
-	}
-	
 	th, td {
 		text-align: left;
 		padding: 8px 4px;
+		font-family: 宋楷;
+		font-size: 0.9em;
 	}
 	
 	#textarea {
 		background-color: pink;
 		font-size: 0.9em;
-		font-family: 宋体;
+		font-family: 宋楷;
 		color: black;
+	}
+	
+	b {
+		color: black;
+		font-size: 0.9em;
+		font-family: 宋楷;
 	}
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
@@ -37,30 +41,49 @@
 		<table style="margin: auto">
 			<tr>
 				<th>*房屋名称:</th>
-				<td><input style="width: 500px;" type="text" autocomplete="off" required="required" name="name"></td>
+				<td>
+					<input style="width: 500px;" type="text" autocomplete="off" required="required" name="name"
+					placeholder="用一句话介绍你的房间吧">
+				</td>
 				<th>*可住人数:</th>
-				<td><input type="number" step="1" min="1" autocomplete="off" required="required" name="pn">&nbsp;人</td>
+				<td>
+					<input type="number" step="1" min="1" autocomplete="off" required="required" name="pn"
+						placeholder="例如&quot;2&quot;">&nbsp;<b>人</b></td>
 			</tr>
 			<tr>
-				<th>*最短时间:</th>
-				<td><input type="number" min="1" autocomplete="off" required="required" name="time_short">&nbsp;天</td>
-				<th>*最长时间:</th>
-				<td><input type="number" min="1" autocomplete="off" required="required" name="time_long">&nbsp;天</td>
+				<th>*最短可租:</th>
+				<td>
+					<input type="number" min="1" autocomplete="off" required="required" name="time_short"
+						placeholder="例如&quot;1&quot;">&nbsp;<b>天</b>
+				</td>
+				<th>*最长可租:</th>
+				<td>
+					<input type="number" min="1" autocomplete="off" required="required" name="time_long"
+						placeholder="例如&quot;365&quot;">&nbsp;<b>天</b>
+				</td>
 			</tr>
 			<tr>
 				<th>*面积:</th>
-				<td><input type="number" step="0.01" min="1" autocomplete="off" required="required" name="area">&nbsp;m<sup>2</sup></td>
+				<td>
+					<input type="number" step="0.01" min="1" autocomplete="off" required="required" name="area"
+						placeholder="例如&quot;100.86&quot;">&nbsp;<b>m<sup>2</sup></b></td>
 				<th>*价格:</th>
-				<td><input type="number" step="0.01" min="1" autocomplete="off" required="required" name="price">&nbsp;元/天</td>
+				<td>
+					<input type="number" step="0.01" min="1" autocomplete="off" required="required" name="price"
+						placeholder="例如&quot;60.20&quot;">&nbsp;<b>元/天</b></td>
 			</tr>
 			<tr>
 				<th>*地址:</th>
-				<td><input style="width: 500px;" autocomplete="address" required="required" name="address"></td>
+				<td>
+					<input style="width: 500px;" autocomplete="address" required="required" name="address"
+						placeholder="详细地址">
+				</td>
 			</tr>
 			<tr>
 				<th colspan="1">*详细描述:</th>
 				<td>
-					<textarea id="textarea" rows="10" cols="69" required="required" name="info"></textarea>
+					<textarea id="textarea" rows="10" cols="69" required="required" name="info"
+					placeholder="请在此处详细介绍您要出租的房屋, 如使用条款、注意事项"></textarea>
 				</td>
 			</tr>
 			<tr>

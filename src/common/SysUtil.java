@@ -20,6 +20,7 @@ public class SysUtil {
 	
 	public static void log(Throwable e) {
 		System.out.println("发生了异常 -> " + " (" + (e == null ? "null" : e.getMessage()) + ")");
+		e.printStackTrace();
 	}
 	
 	public static void log(String e) {

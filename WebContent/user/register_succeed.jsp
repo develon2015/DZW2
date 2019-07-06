@@ -21,6 +21,7 @@ th, td {
 </head>
 
 <body>
+	<h2>恭喜您!</h2>
 	<h2>注册成功, 立即<a href="${ pageContext.request.contextPath }/user/login.html">登录</a></h2>
 	
 	<jsp:include page="/css/footer.jsp"></jsp:include>
