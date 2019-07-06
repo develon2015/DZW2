@@ -12,7 +12,7 @@ public class SearchController {
 	public String search(@RequestParam(value = "q", defaultValue = "出租屋") String q,
 			Model model) {
 		if ("".equals(q)) {
-			q = "出租屋";
+			q = "全部";
 		}
 		model.addAttribute("q", q);
 		return "/search.jsp";

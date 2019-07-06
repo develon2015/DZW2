@@ -17,6 +17,13 @@
 		text-align: left;
 		padding: 8px 4px;
 	}
+	
+	#textarea {
+		background-color: pink;
+		font-size: 0.9em;
+		font-family: 宋体;
+		color: black;
+	}
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
@@ -30,40 +37,42 @@
 		<table style="margin: auto">
 			<tr>
 				<th>*房屋名称:</th>
-				<td><input style="width: 500px;" type="text" autocomplete="off" name="name"></td>
+				<td><input style="width: 500px;" type="text" autocomplete="off" required="required" name="name"></td>
+				<th>*可住人数:</th>
+				<td><input type="number" step="1" min="1" autocomplete="off" required="required" name="pn">&nbsp;人</td>
 			</tr>
 			<tr>
 				<th>*最短时间:</th>
-				<td><input type="number" min="1" autocomplete="off" maxlength="6" name="time_short">&nbsp;天</td>
+				<td><input type="number" min="1" autocomplete="off" required="required" name="time_short">&nbsp;天</td>
 				<th>*最长时间:</th>
-				<td><input type="number" min="1" autocomplete="off" maxlength="6" name="time_long">&nbsp;天</td>
+				<td><input type="number" min="1" autocomplete="off" required="required" name="time_long">&nbsp;天</td>
 			</tr>
 			<tr>
 				<th>*面积:</th>
-				<td><input type="number" step="0.01" min="1" autocomplete="off" maxlength="6" name="area">&nbsp;m<sup>2</sup></td>
+				<td><input type="number" step="0.01" min="1" autocomplete="off" required="required" name="area">&nbsp;m<sup>2</sup></td>
 				<th>*价格:</th>
-				<td><input type="number" step="0.01" min="1" autocomplete="off" maxlength="6" name="price">&nbsp;元/天</td>
+				<td><input type="number" step="0.01" min="1" autocomplete="off" required="required" name="price">&nbsp;元/天</td>
 			</tr>
 			<tr>
 				<th>*地址:</th>
-				<td><input style="width: 500px;" autocomplete="address" name="address"></td>
+				<td><input style="width: 500px;" autocomplete="address" required="required" name="address"></td>
 			</tr>
 			<tr>
-				<th>*详细描述:</th>
+				<th colspan="1">*详细描述:</th>
 				<td>
-					<textarea rows="10" cols="69" name="info"></textarea>
+					<textarea id="textarea" rows="10" cols="69" required="required" name="info"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<th>*联系人:</th>
 				<td>
-					<input style="width: 200px;" type="text" autocomplete="off" maxlength="5" name="tel_name">
+					<input style="width: 200px;" type="text" autocomplete="off" required="required" maxlength="5" name="tel_name">
 				</td>
 			</tr>
 			<tr>
 				<th>*联系方式:</th>
 				<td>
-					<input style="width: 200px;" type="number" min="1" autocomplete="off" maxlength="11" name="tel_num">
+					<input style="width: 200px;" type="number" min="1" autocomplete="off" required="required" name="tel_num">
 				</td>
 			</tr>
 			<tr>
