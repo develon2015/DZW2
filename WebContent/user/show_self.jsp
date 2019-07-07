@@ -3,6 +3,7 @@
 <!DOCTYPE HTML>
 <html lang="zh">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>轻松短租网 - ${ user }</title>
 <style type="text/css">
 body {

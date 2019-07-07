@@ -4,6 +4,7 @@
 
 body {
 	text-align: center;
+    font-family: 'Righteous', cursive;
 	border-radius: 40px;
 	/*background-color: #cccccc;*/
 	background: linear-gradient(to right, #eeeeee, white, #eeeeee);
@@ -32,8 +33,8 @@ button {
 }
 
 button:hover {
-	cursor: pointer; /* 鐏忓繑澧� */
-	background-color: pink; /* 缁瀛� */
+	cursor: pointer; /* 閻忓繐绻戞晶锟� */
+	background-color: pink; /* 缂侇喖顦辩�涳拷 */
 }
 
 h1 h2 h3 {

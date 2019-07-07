@@ -15,10 +15,7 @@ public class TestSpringMVC {
     @RequestMapping("/test")
     public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse response) {
         SysUtil.log("∑√Œ ≥…π¶");
-        String a = request.getParameter("a");
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("testSpringMVC.jsp");
-        mv.addObject("a", a);
         return mv;
     }
 }

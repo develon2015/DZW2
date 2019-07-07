@@ -1,3 +1,4 @@
+<%@page import="controller.LoginController"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="common.*"%>
@@ -9,6 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>轻松短租网</title>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css"/>
@@ -26,7 +28,7 @@
 	
 	#search {
 		height: 28px;
-		width: 600px;
+		width: 31.25%;
 		margin-top: 20px;
 	}
 	
@@ -47,12 +49,13 @@
 <body>
 	<h1 id="title">寻找旅行中的家</h1>
 	<%
-		User user = (User) request.getAttribute("user");
+		//User user = (User) request.getAttribute("user");
+		User user = (User) LoginController.getUser(request, response);
 		if (user == null) {
 	%>
 			<a href="${ pageContext.request.contextPath }/user/login.html">登录</a>&nbsp;/&nbsp;<a href="${ pageContext.request.contextPath }/user/register.html">注册</a>
 	<% } else { %>
-			<a href="${ pageContext.request.contextPath }/user/show.html">${ user.name }</a>
+			<a href="${ pageContext.request.contextPath }/user/show.html"><%= user.getName() %></a>
 			&nbsp;
 			<a href="${ pageContext.request.contextPath }/user/logout.html">退出</a>
 			&nbsp;
