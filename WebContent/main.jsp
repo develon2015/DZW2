@@ -1,7 +1,7 @@
-<%@page import="common.*"%>
-<%@page import="user.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="common.*"%>
+<%@page import="em.*"%>
 <%
 	// SysUtil.test();
 %>
@@ -62,7 +62,7 @@
 	<div>
 	<form id="search-form" action="${ pageContext.request.contextPath }/search.html">
       <input id="search" autocomplete="off" 
-      	placeholder="请输入要搜索的内容, 如&quot;北京 四合院&quot;、&quot;中南海 别墅&quot;、&quot;武汉 旅馆&quot;__" name="q">
+      	placeholder="请输入要搜索的内容, 如&quot;北京 四合院&quot;、&quot;中南海 别墅&quot;、&quot;武汉 旅馆&quot; _" name="q">
       <button id="search-icon" type="submit">
       	<font>搜索</font>
       </button>

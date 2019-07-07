@@ -1,5 +1,5 @@
 <%@page import="common.SysUtil"%>
-<%@page import="user.*"%>
+<%@page import="em.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

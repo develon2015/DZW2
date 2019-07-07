@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import common.DBI;
 import common.HttpTools;
 import common.SysUtil;
-import user.User;
+import em.User;
 
 @Controller
 public class LoginController {

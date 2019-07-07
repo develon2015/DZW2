@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import common.DBI;
 import common.SysUtil;
-import user.User;
+import em.User;
 
 @Controller
 public class LeaseController {
@@ -100,7 +101,7 @@ public class LeaseController {
 						Timestamp date = null;
 						if (rs.next()) {
 							date = rs.getTimestamp(1);
-							System.out.println(date);
+//							System.out.println(date);
 						}
 						psmt.clearParameters();
 						psmt.setString(1, getParameter(formItems, "name"));
@@ -137,13 +138,24 @@ public class LeaseController {
 							System.out.println("id -> " + id);
 							String image = saveImg(formItems, request, response, "" + id);
 							SysUtil.log(image);
+							psmt.close();
+							psmt = DBI.getConnection().prepareStatement("UPDATE house SET image=? WHERE id=?");
+							if (image == null || "".equals(image)) {
+								psmt.setNull(1, java.sql.Types.VARCHAR);
+							} else 
+								psmt.setString(1, image);
+							psmt.setInt(2, id);
+							SysUtil.log("更新image字段", psmt);
+							r = psmt.executeUpdate();
+							if (r != 1) {
+								SysUtil.log("更新image字段失败");
+							}
 						} catch(Exception e) {
 							SysUtil.log(e);
 						}
 						
 						// 返回结果
-						mv.setViewName("redirect:/user/show.html");
-						mv.addObject("result", "成功!");
+						mv.setViewName("/lease_succeed.jsp");
 						return mv;
 				} catch(SQLException e) {
 					SysUtil.log(e);
@@ -240,9 +252,12 @@ public class LeaseController {
 		for (FileItem item : formItems) {
 			// 处理在表单中的字段
 			if (item.isFormField()) {
-				SysUtil.log(item.getFieldName(), item.getString());
-				if (key.equals(item.getFieldName()) ) {
-					return item.getString();
+				try {
+					if (key.equals(item.getFieldName()) ) {
+						return item.getString("UTF-8");
+					}
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
 				}
 			}
 		}

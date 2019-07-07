@@ -68,7 +68,8 @@ public class RegisterController {
 				throw new RuntimeException("请稍后再试");
 		} catch (Exception e) {
 			SysUtil.log(e);
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage()
+					.matches("Duplicate entry .+ for key 'name'") ? "用户名已被注册" : e.getMessage());
 		}
 		return true;
 	}

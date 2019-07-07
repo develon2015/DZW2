@@ -17,7 +17,7 @@
 	}
 	
 	#textarea {
-		background-color: pink;
+		background-color: white;
 		font-size: 0.9em;
 		font-family: 宋楷;
 		color: black;
