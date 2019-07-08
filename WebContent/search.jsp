@@ -84,7 +84,7 @@ body {
 </body>
 	<script type="text/javascript" defer="defer">
 		var a = document.getElementById("search");
-		//console.log(a.placeholder);
+		a.value = '${ q }';
 		
 		var title = a.placeholder; // 完整标题
 		var i = 0;
