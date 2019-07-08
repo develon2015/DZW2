@@ -49,7 +49,7 @@ body {
 <body>
 	<div>
 	<form id="search-form" action="${ pageContext.request.contextPath }/search.html">
-      <input id="search" autocomplete="off" 
+      <input id="search" autocomplete="off" autofocus="autofocus"
       	placeholder="请输入要搜索的内容, 如&quot;北京 四合院&quot;、&quot;中南海 别墅&quot;、&quot;武汉 旅馆&quot; _" name="q">
       <button id="search-icon" type="submit">
       	<font>搜索</font>
@@ -70,9 +70,7 @@ body {
 		<a href="?q=${ q }&page=${ pn == 0 ? 1 : pn }">尾页</a>
 	</p>
 	
-	<p>
-		<h2>${ nothing }</h2>
-	</p>
+	<h2>${ nothing }</h2>
 	
 	<%
 		for (HouseItem h : (List<HouseItem>) request.getAttribute("list")) {
@@ -80,7 +78,9 @@ body {
 		}
 	%>
 
-	<jsp:include page="/css/footer.jsp"></jsp:include>
+	<div>
+		<a href="${ pageContext.request.contextPath }/index.html">轻松短租网</a><br>
+	</div>
 </body>
 	<script type="text/javascript" defer="defer">
 		var a = document.getElementById("search");

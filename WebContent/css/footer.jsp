@@ -5,6 +5,6 @@
 	response.setCharacterEncoding("UTF-8");
 %>
 	<div class="footer">
-		<a href="${ pageContext.request.contextPath }/index.html">首页</a><br>
+		<a href="${ pageContext.request.contextPath }/index.html">轻松短租网</a><br>
 	</div>
 <%@ page trimDirectiveWhitespaces="true" %>
