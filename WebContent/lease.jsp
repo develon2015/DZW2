@@ -34,7 +34,6 @@
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
 </head>
 <body>
-<div id="div_footer">
 	<h2>发布出租屋</h2>
 	<h3 class="warning">${ result }</h3>
 	
@@ -113,9 +112,7 @@
 	    <button type="submit">确认</button>
 	</form>
 	
-
 	<jsp:include page="/css/footer.jsp"></jsp:include>
-</div>
 </body>
 </html>
 <%@ page trimDirectiveWhitespaces="true" %>

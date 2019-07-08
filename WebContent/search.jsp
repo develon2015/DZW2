@@ -47,6 +47,8 @@ body {
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
 </head>
 <body>
+	<h1 id="title">寻找旅行中的家</h1>
+	
 	<div>
 	<form id="search-form" action="${ pageContext.request.contextPath }/search.html">
       <input id="search" autocomplete="off" autofocus="autofocus"
@@ -72,15 +74,39 @@ body {
 	
 	<h2>${ nothing }</h2>
 	
-	<%
-		for (HouseItem h : (List<HouseItem>) request.getAttribute("list")) {
-			out.println("<div>" + h.name + "</div>");
-		}
-	%>
+	<table style="margin: auto">
+		<tr>
+			<th style="text-align: left;"><div>图片</div></th>
+			<th><div>名称</div></th>
+			<th><div>地址</div></th>
+			<th><div>面积</div></th>
+			<th><div>人数</div></th>
+			<th><div>时间</div></th>
+			<th><div>价格</div></th>
+			<th style="text-align: right;"><div>链接</div></th>
+		</tr>
+	<% for (HouseItem h : (List<HouseItem>) request.getAttribute("list")) { %>
+		<tr>
+			<td style="text-align: left;"><div><img height="150px" src='<%= h.icon %>'/></div></td>
+			<td><div><%= h.name %></div></td>
+			<td><div><%= h.address %></div></td>
+			<td><div><%= h.area %>&nbsp;m<sup>2</sup></div></td>
+			<td><div>可住<%= h.pn %>人</div></td>
+			<td><div>可入住<%= h.time_short %>~<%= h.time_long %>天</div></td>
+			<td><div><%= h.price %>元/天</div></td>
+			<td style="text-align: right;"><div><a href="${ pageContext.request.contextPath }/house.html?id=<%= h.id %>">查看</a></div></td>
+		</tr>
+	<% } %>
+	</table>
+	
+	<p>
+		<a href="?q=${ q }">首页</a>
+		<a href="?q=${ q }&page=<%= (p - 1) < 1 ? 1 : (p - 1) + "" %>">上一页</a>
+		<a href="?q=${ q }&page=<%= (p + 1) >= pn  ? (pn == 0 ? 1 : pn) : (p + 1) + "" %>">下一页</a>
+		<a href="?q=${ q }&page=${ pn == 0 ? 1 : pn }">尾页</a>
+	</p>
 
-	<div>
-		<a href="${ pageContext.request.contextPath }/index.html">轻松短租网</a><br>
-	</div>
+	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>
 	<script type="text/javascript" defer="defer">
 		var a = document.getElementById("search");
@@ -98,6 +124,23 @@ body {
 		}
 		
 		setTimeout(t, 100);
+		
+		var b = document.getElementById("title");
+		//console.log(b.innerText);
+		
+		var title2 = b.innerText; // 完整标题
+		var i2 = 1;
+
+		function t2() {
+			b.innerText = title2.substr(0, i2);
+			//console.log(b.innerText);
+			i2 ++ ;
+			if (i2 >= title2.length + 60)
+				i2 = 1;
+			setTimeout(t2, 100);
+		}
+		
+		setTimeout(t2, 1);
 	</script>
 </html>
 <%@ page trimDirectiveWhitespaces="true" %>

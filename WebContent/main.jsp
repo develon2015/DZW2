@@ -72,10 +72,7 @@
     </form>
     </div>
 	
-	<div class="footer">
-		<a href="${ pageContext.request.contextPath }/index.html">轻松短租网</a><br>
-	</div>
-	
+	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>
 	<script type="text/javascript" defer="defer">
 		var a = document.getElementById("search");

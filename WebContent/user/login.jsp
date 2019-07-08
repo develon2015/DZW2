@@ -23,7 +23,6 @@ th, td {
 </style>
 </head>
 <body>
-<div id="div_footer">
 	<h2>登录到您的短租账户</h2>
 	<h3 id="warning">${ login_result }</h3>
 	<form action="?request=login" method="post">
@@ -54,7 +53,6 @@ th, td {
 	</div>
 	
 	<jsp:include page="/css/footer.jsp"></jsp:include>
-</div>
 </body>
 </html>
 <%@ page trimDirectiveWhitespaces="true" %>

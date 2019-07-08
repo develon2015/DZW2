@@ -40,6 +40,12 @@ public class SearchController {
 		if (qs.length < 1)
 			SysUtil.log("啥也不干");
 		for (String q : qs) {
+			if (qs.length == 1 && "#ALL".equals(q)) {
+				q = "%";
+			} else {
+				q = q.replaceAll("%", "\\\\%");
+				q = q.replaceAll("_", "\\\\_");
+			}
 			try {
 				if (psmt == null || psmt.isClosed()) {
 					psmt = DBI.getConnection().prepareStatement(sql);
@@ -106,7 +112,7 @@ public class SearchController {
 		}
 		model.addAttribute("q", q);
 		if (ALL.equals(q)) {
-			q = "%";
+			q = "#ALL";
 		}
 		
 		List<HouseItem> list = list(q);
@@ -120,7 +126,8 @@ public class SearchController {
 		if (n == 0) {
 			model.addAttribute("nothing", "抱歉, 啥也没找到");
 		}
-		pn = n / MAX + 1; // 最大页数
+		pn = n / MAX + (n % MAX == 0 ? 0 : 1); // 最大页数
+		SysUtil.log("最大页数", "" + pn);
 		model.addAttribute("pn", pn);
 		
 		SysUtil.log("搜索结果", list.size());
