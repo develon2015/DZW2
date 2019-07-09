@@ -72,7 +72,9 @@ body {
 		<a href="?q=${ q }&page=${ pn == 0 ? 1 : pn }">尾页</a>
 	</p>
 	
+	<% if (request.getAttribute("nothing") != null) { %>
 	<h2>${ nothing }</h2>
+	<% } else { %>
 	
 	<table style="margin: auto">
 		<tr>
@@ -85,7 +87,9 @@ body {
 			<th><div>价格</div></th>
 			<th style="text-align: right;"><div>链接</div></th>
 		</tr>
-	<% for (HouseItem h : (List<HouseItem>) request.getAttribute("list")) { %>
+	<% List<?> list = (List<?>) request.getAttribute("list");
+		for (Object e : list) {
+			HouseItem h = (HouseItem) e;%>
 		<tr>
 			<td style="text-align: left;"><div><img height="150px" src='<%= h.icon %>'/></div></td>
 			<td><div><%= h.name %></div></td>
@@ -105,6 +109,7 @@ body {
 		<a href="?q=${ q }&page=<%= (p + 1) >= pn  ? (pn == 0 ? 1 : pn) : (p + 1) + "" %>">下一页</a>
 		<a href="?q=${ q }&page=${ pn == 0 ? 1 : pn }">尾页</a>
 	</p>
+	<% } %>
 
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>

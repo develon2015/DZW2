@@ -47,7 +47,7 @@ public class SearchController {
 				q = q.replaceAll("_", "\\\\_");
 			}
 			try {
-				if (psmt == null || psmt.isClosed()) {
+				if (psmt == null || !DBI.isValid() || psmt.isClosed()) {
 					psmt = DBI.getConnection().prepareStatement(sql);
 				}
 				
