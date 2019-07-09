@@ -23,7 +23,7 @@ th, td {
 </style>
 </head>
 <body>
-	<h2>登录到您的短租账户</h2>
+	<p class="title">登录到您的短租账户</p>
 	<h3 id="warning">${ login_result }</h3>
 	<form action="?request=login" method="post">
 		<table style="margin: auto">

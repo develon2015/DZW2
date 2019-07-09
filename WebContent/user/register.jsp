@@ -12,9 +12,14 @@
 body {
 	text-align: center;
 }
+
 th, td {
 	text-align: left;
 	padding: 8px 4px;
+}
+
+#warning {
+	color: red;
 }
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
@@ -22,18 +27,9 @@ th, td {
 </head>
 
 <body>
-	<%
-		String register_result = (String) request.getAttribute("register_result");
-		if (register_result != null) {
-	%>
-	<h2>Sorry, <%=register_result%></h2>
-	<%
-		} else {
-	%>
-	<h2>注册账号</h2>
-	<%
-		}
-	%>
+	<p class="title">注册新的短租账号</p>
+	<h3 id="warning">${ register_result }</h3>
+	
 	<form action="?request=register" method="post">
 		<table style="margin: auto">
 			<tr>

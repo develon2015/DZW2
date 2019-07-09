@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
 </head>
 <body>
-	<h2>发布出租屋</h2>
+	<p class="title">发布出租屋</p>
 	<h3 class="warning">${ result }</h3>
 	
 	<form method="post" action="?request=upload" enctype="multipart/form-data">
@@ -43,7 +43,7 @@
 			<tr>
 				<th>*房屋名称:</th>
 				<td>
-					<input style="width: 500px;" type="text" autocomplete="off" required="required" name="name"
+					<input value="aa" style="width: 500px;" type="text" autocomplete="off" required="required" name="name"
 					placeholder="用一句话介绍你的房间吧">
 				</td>
 				<th>*可住人数:</th>

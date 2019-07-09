@@ -35,11 +35,12 @@ font.title {
 div.info {
 	background-color: #e4f8e1;
 }
+
 </style>
 </head>
 <body>
 	<% HouseItem h = (HouseItem) request.getAttribute("house"); %>
-	<h2><font class="title"><%= h.name %></font></h2><hr>
+	<p class="title"><%= h.name %></p>
 	
 	<table style="margin: auto">
 		<tr>
@@ -68,16 +69,40 @@ div.info {
 		</tr>
 	</table>
 	
-	<div><button onclick="location='${ pageContext.request.contextPath }/buy.html?id=<%= h.id %>'">预定</button></div>
+	<div>
+	<br>
+	<input id="d1" type="date">~<input id="d2" type="date"><br>
+	<button onclick="buy()">立即预定</button>
+	</div>
 	
+	<p class="title">描述</p>
 	<div class="info">
 		<hr>
-			<p><%= h.info.replace("\n", "<br>") %></p>
+			<p style="text-align: left;"><%= h.info.replace("\n", "<br>") %></p>
 		<hr>
 	</div>
-	<div><img height="150px" src='<%= h.icon %>'/><img height="150px" src='<%= h.icon %>'/><img height="150px" src='<%= h.icon %>'/></div>
+	
+	<p class="title">图片展示</p>
+	<div class="info">
+	<hr>
+		<% if (h.imgs.length == 0) { %>
+		<p>暂无图片</p>
+		<% } %>
+		<% for (int i = 0; i < h.imgs.length; i ++ ) { %>
+		<a href="${ pageContext.request.contextPath }/showimg.html?url=<%= h.imgs[i] %>"><img title="点击查看大图" width="33%" src='<%= h.imgs[i] %>'/></a>
+		<% } %>
+	<hr>
+	</div>
 	
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>
+<script type="text/javascript">
+	var d1 = document.getElementById('d1');
+	var d2 = document.getElementById('d2');
+
+	function buy() {
+		location='${ pageContext.request.contextPath }/buy.html?id=<%= h.id %>';
+	}
+</script>
 </html>
 <%@ page trimDirectiveWhitespaces="true" %>

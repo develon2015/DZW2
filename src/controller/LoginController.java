@@ -20,7 +20,7 @@ import em.User;
 
 @Controller
 public class LoginController {
-	private static final String sql = "SELECT uid FROM user WHERE name=? AND passwd=MD5(MD5(?))";
+	private static final String sql = "SELECT * FROM user WHERE name=? AND passwd=MD5(MD5(?))";
 	private static PreparedStatement psmt = null;
 	private static Map<String, User> userList = new HashMap<String, User>();
 	
@@ -88,12 +88,12 @@ public class LoginController {
 				SysUtil.log("用户" + name + "登录失败");
 				return false;
 			}
-			int uid = rs.getInt(1);
+			int uid = rs.getInt("uid");
 			SysUtil.log("用户" + name + "登录成功, id为" + uid);
 			Cookie cookie = new Cookie("uid", uid + "");
 			cookie.setPath("/");
 			response.addCookie(cookie);
-			User user = new User(uid, name);
+			User user = new User(rs);
 			userList.put("" + uid, user);
 			return true;
 		} catch (Exception e) {

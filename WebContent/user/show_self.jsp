@@ -14,7 +14,12 @@ body {
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
 </head>
 <body>
-	<h2>${ user }的短租账户</h2>
+	<p class="title">${ user }的短租账户</p>
+	<div class="info">
+		<hr>
+			<p style="text-align: center;">${ user.name }</p>
+		<hr>
+	</div>
 
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>

@@ -43,4 +43,19 @@ public class HouseController {
 		model.addAttribute("house", house);
 		return "/house.jsp";
 	}
+	
+	@RequestMapping("/buy")
+	public String buy(
+			@RequestParam(value = "id", required = true) int id,
+			Model model) {
+		return "/showimg.jsp";
+	}
+
+	@RequestMapping("/showimg")
+	public String showimg(
+			@RequestParam(value = "url", required = true) String url,
+			Model model) {
+		model.addAttribute("url", url);
+		return "/showimg.jsp";
+	}
 }

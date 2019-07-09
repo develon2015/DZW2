@@ -53,10 +53,11 @@ public class HouseItem {
 				for (int i = 0; i < imgs.length; i ++ ) {
 					imgs[i] = SysUtil.get("path") + "/upload/" + imgs[i];
 				}
+				icon = imgs[0]; // 用第一张图片作为
 			} else {
-				imgs = new String[] {SysUtil.get("path") + "/res/default.jpg"};
+				imgs = new String[0];
+				icon = SysUtil.get("path") + "/res/default.jpg";
 			}
-			icon = imgs[0]; // 用第一张图片作为
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
