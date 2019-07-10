@@ -1,23 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
-<html lang="zh">
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>轻松短租网 - 四川</title>
-<link rel="icon" href="/Demo/favicon.ico">
-<link rel="stylesheet" href="/Demo/css/style.css">
-<style type="text/css">
-body {
-	text-align: center;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jcalendar</title>
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/Jcalendar.css">
 </head>
+<style>
+    #date{
+        margin-top: 30px;
+        margin-left: 50px;
+    }
+</style>
 <body>
-	<canvas id="canvas"></canvas>
-	
+    <form class="form-inline">
+        <div class="form-group">
+            <input id="date" class="form-control"  type="text" value="" placeholder="请选择时间" readonly/>
+        </div>
+    </form>
 </body>
-	<script type="text/javascript" defer="defer">
-	
-	</script>
+<script src="./js/Jcalendar.js"></script>
+<script>
+    new Jcalendar({
+        input:'date',
+    });
+</script>
 </html>

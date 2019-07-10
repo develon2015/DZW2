@@ -43,23 +43,23 @@
 			<tr>
 				<th>*房屋名称:</th>
 				<td>
-					<input value="aa" style="width: 500px;" type="text" autocomplete="off" required="required" name="name"
+					<input style="width: 500px;" type="text" autocomplete="off" required="required" name="name"
 					placeholder="用一句话介绍你的房间吧">
 				</td>
 				<th>*可住人数:</th>
 				<td>
-					<input type="number" step="1" min="1" autocomplete="off" required="required" name="pn"
+					<input value="1" type="number" step="1" min="1" autocomplete="off" required="required" name="pn"
 						placeholder="例如&quot;2&quot;">&nbsp;<b>人</b></td>
 			</tr>
 			<tr>
 				<th>*最短可租:</th>
 				<td>
-					<input type="number" min="1" autocomplete="off" required="required" name="time_short"
+					<input value="1" type="number" min="1" autocomplete="off" required="required" name="time_short"
 						placeholder="例如&quot;1&quot;">&nbsp;<b>天</b>
 				</td>
 				<th>*最长可租:</th>
 				<td>
-					<input type="number" min="1" autocomplete="off" required="required" name="time_long"
+					<input value="30" type="number" min="1" autocomplete="off" required="required" name="time_long"
 						placeholder="例如&quot;365&quot;">&nbsp;<b>天</b>
 				</td>
 			</tr>
@@ -75,15 +75,16 @@
 			</tr>
 			<tr>
 				<th>*地址:</th>
-				<td>
+				<td colspan="3">
 					<input style="width: 500px;" autocomplete="address" required="required" name="address"
 						placeholder="详细地址">
 				</td>
 			</tr>
 			<tr>
-				<th colspan="1">*详细描述:</th>
-				<td>
+				<th>*详细描述:</th>
+				<td colspan="3">
 					<textarea id="textarea" rows="10" cols="69" required="required" name="info"
+					style="width: 769px; height: 259px;"
 					placeholder="请在此处详细介绍您要出租的房屋, 如使用条款、注意事项"></textarea>
 				</td>
 			</tr>

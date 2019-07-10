@@ -9,21 +9,9 @@
 	body {
 		text-align: center;
 	}
-	
-	body {
-		text-align: center;
-	}
-	
-	th, td {
-		text-align: left;
-		padding: 8px 4px;
-	}
-	
-	#textarea {
-		background-color: pink;
-		font-size: 0.9em;
-		font-family: 宋体;
-		color: black;
+
+	h1, h2, h3 {
+		font-family: 楷体;
 	}
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
@@ -31,7 +19,9 @@
 </head>
 <body>
 	<h2>恭喜您!</h2>
-	<h2>发布成功, 继续<a href="${ pageContext.request.contextPath }/lease.html">发布</a></h2>
+	<h3>发布成功, 正在等待审核, 您可以</h3>
+	<h2><a href="${ pageContext.request.contextPath }/lease.html">继续发布</a></h2>
+	<h2><a href="${ pageContext.request.contextPath }/lease_show.html?id=${ id }">立即预览</a></h2>
 	
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>

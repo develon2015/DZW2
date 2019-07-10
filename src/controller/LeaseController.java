@@ -18,11 +18,14 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import common.DBI;
 import common.SysUtil;
+import em.HouseItem;
 import em.User;
 
 @Controller
@@ -136,6 +139,8 @@ public class LeaseController {
 							}
 							int id = rs_id.getInt("id");
 							System.out.println("id -> " + id);
+							mv.addObject("id", id);
+							
 							String image = saveImg(formItems, request, response, "" + id);
 							SysUtil.log(image);
 							psmt.close();
@@ -262,5 +267,13 @@ public class LeaseController {
 			}
 		}
 		return "ʧ�ܵ�ȡֵ";
+	}
+	
+	@RequestMapping("/lease_show")
+	public String lease_show(
+			@RequestParam(value = "id", required = true) int id,
+			Model model) {
+		model.addAttribute("house", new HouseItem(id));
+		return "/house_show.jsp";
 	}
 }

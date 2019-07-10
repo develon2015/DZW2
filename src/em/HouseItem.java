@@ -1,8 +1,10 @@
 package em;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import common.DBI;
 import common.SysUtil;
 
 public class HouseItem {
@@ -24,10 +26,32 @@ public class HouseItem {
 	public double price;
 	public double area;
 	
-	public boolean enable;
+	public int enable; // 0ÉóºËÖÐ 1Í¨¹ý 2¾Ü¾ø
 	public Timestamp date;
 	
+	private static final String sql = 
+			"SELECT * FROM house WHERE " +
+			"id=?";
+	
 	public HouseItem(ResultSet rs) {
+		createFromRS(rs);
+	}
+	
+	public HouseItem(int id) {
+		try {
+			PreparedStatement psmt = DBI.getConnection().prepareStatement(sql);
+			psmt.clearParameters();
+			psmt.setInt(1, id);
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {
+				createFromRS(rs);
+			}
+		} catch(Exception e) {
+			SysUtil.log(e);
+		}
+	}
+	
+	private void createFromRS(ResultSet rs) {
 		try {
 			id = rs.getInt("id");
 			uid = rs.getInt("uid_master");
@@ -44,7 +68,7 @@ public class HouseItem {
 			area = rs.getDouble("area");
 			address = rs.getString("address");
 			
-			enable = rs.getBoolean("enable");
+			enable = rs.getInt("enable");
 			date = rs.getTimestamp("date");
 			
 			String img = rs.getString("image");

@@ -6,6 +6,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>轻松短租网</title>
+<link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/Jcalendar.css">
 <style type="text/css">
 body {
 	text-align: center;
@@ -16,10 +19,7 @@ th, td {
 	padding: 8px 4px;
 	background-color: #e4f8e1;
 }
-</style>
-<link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
-<style type="text/css">
+
 button {
 	border-radius: 20px;
 	width: 200px;
@@ -35,7 +35,6 @@ font.title {
 div.info {
 	background-color: #e4f8e1;
 }
-
 </style>
 </head>
 <body>
@@ -43,9 +42,6 @@ div.info {
 	<p class="title"><%= h.name %></p>
 	
 	<table style="margin: auto">
-		<tr>
-			<td><div>地址</div></td>
-			<td><div><%= h.address %></div></td>
 		<tr>
 			<td><div>面积</div></td>
 			<td><div><%= h.area %>&nbsp;m<sup>2</sup></div></td>
@@ -66,12 +62,17 @@ div.info {
 		<tr>
 			<td><div>联系方式</div></td>
 			<td><div><%= h.tel_num %></div></td>
+		<tr>
+			<td><div>地址</div></td>
+			<td><div><%= h.address %></div></td>
 		</tr>
 	</table>
 	
 	<div>
 	<br>
-	<input id="d1" type="date">~<input id="d2" type="date"><br>
+	<font style="color: red; font-size: 18px;">选择入住时间</font><br><br>
+	<input id="d1" class="form-control"  type="text" value="" placeholder="请选择时间" readonly/>&nbsp;~
+	<input id="d2" class="form-control"  type="text" value="" placeholder="请选择时间" readonly/><br>
 	<button onclick="buy()">立即预定</button>
 	</div>
 	
@@ -96,12 +97,27 @@ div.info {
 	
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>
+<script src="./js/Jcalendar.js"></script>
 <script type="text/javascript">
+	new Jcalendar({
+        input:'d1',
+    });
+	
+	new Jcalendar({
+        input:'d2',
+    });
+	
 	var d1 = document.getElementById('d1');
 	var d2 = document.getElementById('d2');
 
 	function buy() {
-		location='${ pageContext.request.contextPath }/buy.html?id=<%= h.id %>';
+		if (d1.value === "" || d2.value === "" || d1.value >= d2.value) {
+			alert('日期错误, 请重新选择');
+			return;
+		}
+		location='${ pageContext.request.contextPath }/buy.html?id=<%= h.id %>&d1=' + 
+				d1.value + '&d2=' +
+				d2.value;
 	}
 </script>
 </html>

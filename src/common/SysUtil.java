@@ -8,7 +8,7 @@ public class SysUtil {
 	
 	static {
 		try {
-			System.out.println("OK" + RES_BUNDLE.getString("db_url"));
+			System.out.println(RES_BUNDLE.getString("db_url"));
 		} catch(Throwable e) {
 			log(e);
 		}

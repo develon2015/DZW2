@@ -47,8 +47,11 @@ public class HouseController {
 	@RequestMapping("/buy")
 	public String buy(
 			@RequestParam(value = "id", required = true) int id,
+			@RequestParam(value = "d1", required = true) String d1,
+			@RequestParam(value = "d2", required = true) String d2,
 			Model model) {
-		return "/showimg.jsp";
+		model.addAttribute("house", new HouseItem(id));
+		return "/house.jsp";
 	}
 
 	@RequestMapping("/showimg")
