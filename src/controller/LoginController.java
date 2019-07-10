@@ -81,7 +81,7 @@ public class LoginController {
 				psmt = DBI.getConnection().prepareStatement(sql);
 			}
 			psmt.setString(1, name);
-			psmt.setString(2, passwd + name);
+			psmt.setString(2, passwd);
 			SysUtil.log(name + ", " + passwd, psmt);
 			ResultSet rs = psmt.executeQuery();
 			if (!rs.next()) {

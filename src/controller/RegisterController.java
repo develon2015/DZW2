@@ -57,7 +57,7 @@ public class RegisterController {
 		try {
 			//
 			psmt.setString(1, name);
-			psmt.setString(2, passwd + name); // 密码加密
+			psmt.setString(2, passwd); // 密码加密
 			psmt.setString(3, phone);
 			if (email != null && !"".equals(email)) {
 				psmt.setString(4, email);
@@ -111,7 +111,7 @@ public class RegisterController {
 				return mv;
 			}
 			
-			if (!phone.matches("^1(\\d){10}$")) {
+			if (!phone.matches("^1[3578](\\d){9}$")) {
 				mv.addObject("register_result", "注册失败, 手机号不正确");
 				return mv;
 			}

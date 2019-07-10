@@ -12,9 +12,14 @@
 body {
 	text-align: center;
 }
+
 th, td {
 	text-align: left;
 	padding: 8px 4px;
+}
+
+h1, h2, h3 {
+	font-family: 楷体;
 }
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">

@@ -115,3 +115,7 @@ p.title {
   display: inline-block;
   #cursor: pointer;
 }
+
+div.info {
+	background-color: #e4f8e1;
+}

@@ -96,7 +96,8 @@
             if (today.getDate() === date && today.getFullYear() === year && today.getMonth() + 1 === month) {
                 days.push({
                     "date": date,
-                    "showDate": "今天",
+                    //"showDate": "今天",
+                    "showDate": date,
                     "thisMonth": thisMonth,
                     "className": className
                 });
