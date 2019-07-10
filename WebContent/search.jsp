@@ -100,6 +100,9 @@ body {
 			<td><div><%= h.price %>元/天</div></td>
 			<td style="text-align: right;"><div><a href="${ pageContext.request.contextPath }/house.html?id=<%= h.id %>">查看</a></div></td>
 		</tr>
+		<tr>
+		<td colspan="8"><hr></td>
+		</tr>
 	<% } %>
 	</table>
 	

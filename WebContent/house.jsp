@@ -79,7 +79,7 @@ div.info {
 	<p class="title">描述</p>
 	<div class="info">
 		<hr>
-			<p style="text-align: left;"><%= h.info.replace("\n", "<br>") %></p>
+			<p style="margin: 40px 200px; text-align: left;"><%= h.info.replace("\n", "<br>") %></p>
 		<hr>
 	</div>
 	

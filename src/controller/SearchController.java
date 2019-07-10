@@ -80,23 +80,29 @@ public class SearchController {
 			ls.add(en.getValue());
 		}
 		
+		System.out.println("ls数量" + ls.size());
+		for (int i = 0; i < ls.size(); i ++ ) {
+			System.out.println(i + "-> " + ls.get(i).id + " " + ls.get(i).name + ", 比重 " + ls.get(i).weight);
+		}
+		System.out.println("----------------------------");
+		
 		HouseItem enext = null;
-		for (int i = 0; i < ls.size() - 1; i ++ ) {
+		for (int i = 0; i < ls.size(); i ++ ) {
 			
-			HouseItem e = ls.get(i); // 当前元素(0, 1, ..., n-2)
+			HouseItem e = ls.get(i); // 当前元素(0, 1, ..., n-1)
 			int weight = e.weight;
-			//System.out.printf("元素%s, 比重%d 开始交换\n", e, weight);
 			
 			// n与[n+1, n-1]比较
+			// 最大的是谁?
 			for (int j = i + 1; j < ls.size(); j ++ ) {
 				enext = ls.get(j);
 				if (enext.weight > weight) { // 交换次序
-					HouseItem tmp = e;
-					ls.set(i, enext);
-					ls.set(j, tmp);
-					//System.out.printf("交换%s和%s\n", e, enext);
+					ls.set(j, e);
+					e = enext;
 				}
 			}
+			ls.set(i, e);
+			System.out.printf("确定第%d个最大的是%s, 比重%d\n", i, ls.get(i).name, ls.get(i).weight);
 		}
 		return ls;
 	}

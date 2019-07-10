@@ -37,7 +37,7 @@ public class UserController {
 	
 	@RequestMapping("/user/update")
 	public ModelAndView update(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("/user/update.jsp");
 		User user = null;
 		User user2 = null; // 数据库原始对象
 		if ((user2 = LoginController.getUser(request, response)) == null) {
