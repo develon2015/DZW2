@@ -9,9 +9,10 @@
 body {
 	text-align: center;
 }
+
 th, td {
 	text-align: left;
-	padding: 8px 4px;
+	padding: 8px 10px;
 }
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">

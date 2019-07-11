@@ -55,9 +55,10 @@ public class LoginController {
 
 	/**
 	 * 返回当前登录用户
+	 * 使用该方法无法处理登录过期的cookie, 最好重定向
 	 * @param uid
 	 * @return
-	 * 		null 用户未登录
+	 * 		null 用户未登录或登录过期
 	 */
 	public static User getUser(int uid) {
 		return userList.get("" + uid);

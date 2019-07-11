@@ -92,7 +92,7 @@ public class User implements Cloneable {
 		}
 	}
 
-	public boolean updateDB() throws Exception {
+	public boolean commit() throws Exception {
 		try {
 			PreparedStatement psmt = DBI.getConnection().prepareStatement(
 					"UPDATE user SET name=?, phone=?, email=? WHERE uid=?");

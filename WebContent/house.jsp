@@ -98,6 +98,7 @@ div.info {
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>
 <script src="./js/Jcalendar.js"></script>
+<script src="${ pageContext.request.contextPath }/js/alert.js"></script>
 <script type="text/javascript">
 	new Jcalendar({
         input:'d1',
@@ -119,11 +120,12 @@ div.info {
 				d1.value + '&d2=' +
 				d2.value;
 	}
-	
-	<% String err = (String) request.getParameter("err");
-		if (err != null && !"".equals(err)) { %>
-	alert('<%= err %>');
-	<% } %>
+</script>
+<script src="js/alert.js"></script>
+<script type="text/javascript">
+var info = "${ err }";
+if (info !== "")
+	alert(info, function() { ${ action } });
 </script>
 </html>
 <%@ page trimDirectiveWhitespaces="true" %>

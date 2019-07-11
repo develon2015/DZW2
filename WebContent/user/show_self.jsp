@@ -38,7 +38,7 @@
 	<div class="info">
 		<hr>
 			<p style="text-align: left;">姓名: ${ user.name }&nbsp;&nbsp;联系方式: ${ user.phone }&nbsp;&nbsp;email: ${ user.email }&nbsp;&nbsp;
-			<a href="${ pageContext.request.contextPath }/user/update.html">修改信息</a>&nbsp;<a href="">修改密码</a>
+			<a href="${ pageContext.request.contextPath }/user/update.html">修改信息</a>&nbsp;<a href="${ pageContext.request.contextPath }/user/uppswd.html">修改密码</a>
 			</p>
 		<hr>
 	</div>

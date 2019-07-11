@@ -3,6 +3,8 @@ package controller;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import common.DBI;
 import common.DateUtil;
 import common.SysUtil;
 import em.HouseItem;
+import em.Order;
 import em.User;
 
 @Controller
@@ -63,9 +66,8 @@ public class HouseController {
 		// 日期初步检测
 		if (!d1.matches("(\\d){4}-(\\d){2}-(\\d){2}") || !d2.matches("(\\d){4}-(\\d){2}-(\\d){2}")) {
 			model.addAttribute("err", "日期不正确");
-			return "redirect:/house.html?id=" + hid;
+			return "forward:/house.html";
 		}
-		
 		
 		try {
 			// 日期检测
@@ -78,7 +80,7 @@ public class HouseController {
 			
 			if (date1.compareTo(date2) >= 0 || date1.compareTo(now) < 0) {
 				model.addAttribute("err", "日期不正确, 请重新选择");
-				return "redirect:/house.html?id=" + hid;
+				return "forward:/house.html";
 			}
 			
 			HouseItem house = null;
@@ -91,16 +93,41 @@ public class HouseController {
 			if (house.enable != 1) {
 				// 暂未通过审核
 				model.addAttribute("err", "该房屋暂不可出租");
-				return "redirect:/house.html?id=" + hid;
+				return "forward:/house.html";
 			}
 			
 			int n = DateUtil.daysBetween(date1, date2);
 			if (n < house.time_short || n > house.time_long) {
 				model.addAttribute("err", "租期超出房东规定");
-				return "redirect:/house.html?id=" + hid;
+				return "forward:/house.html";
 			}
 			
-/*
+			// 冲突检测
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM order WHERE hid=? AND satus=1");
+			psmt.clearParameters();
+			psmt.setInt(1, hid);
+			ResultSet rs = psmt.executeQuery();
+			List<Order> list = new ArrayList<Order>();
+			while (rs.next()) {
+				Order o = new Order(rs);
+				if (!(date1.compareTo(o.timee) >= 0 || date2.compareTo(o.times) <= 0)) {
+					list.add(o);
+				}
+			}
+			rs.close();
+			psmt.close();
+
+			if (list.size() != 0) {
+				// 至少一个冲突订单
+				String info = "以下日期已被预定, 请重新选择";
+				model.addAttribute("list", list);
+				for (int i = 0; i < list.size(); i ++ ) {
+					info += "\n" + i + ": " + list.get(i).times.toString() + " ~ " + list.get(i).timee.toString();
+				}
+				model.addAttribute("err", info);
+				return "forward:/house.html";
+			}
+			/*
 CREATE TABLE IF NOT EXISTS order(
 	id INT AUTO_INCREMENT, 
 	hid INT NOT NULL,			#House ID
@@ -110,14 +137,29 @@ CREATE TABLE IF NOT EXISTS order(
 	n INT NOT NULL,
 	price DOUBLE NOT NULL,			#价格
 	date DATETIIME DEFAULT NOW(),
+	status int NOT NULL DEFAULT 0, # 状态 0待处理 1OK 2拒绝
 	PRIMARY KEY(id)
 )DEFAULT CHARSET=UTF8;
- */
-			
-			psmt = DBI.getConnection().prepareStatement("");
-			psmt.clearParameters();
+			 */
+			System.out.println("订单无冲突, 继续处理");
+			psmt = DBI.getConnection().prepareStatement(
+					"INSERT INTO order(hid, uid, times, timee, n, price, date, status) " +
+					"VALUE(?, ?, ?, ?, ?, ?, NOW(), 0)");
 			psmt.setInt(1, hid);
-			ResultSet rs = psmt.executeQuery();
+			psmt.setInt(2, user.getUid());
+			psmt.setDate(3, date1);
+			psmt.setDate(4, date2);
+			psmt.setInt(5, n);
+			psmt.setDouble(6, n * house.price);
+			System.out.println(psmt);
+			int r = psmt.executeUpdate();
+			if (r != 1) {
+				model.addAttribute("err", "订购失败, 请稍后再试");
+				return "forward:/house.html";
+			}
+			model.addAttribute("err", "订购成功");
+			model.addAttribute("action", String.format("location.href = '%s/user/show.html';", SysUtil.get("path")) );
+			return "forward:/house.html";
 		} catch(Exception e) {
 			SysUtil.log(e);
 		}

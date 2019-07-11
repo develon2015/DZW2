@@ -1,21 +1,24 @@
 package controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import common.SysUtil;
 
 @Controller
 public class TestSpringMVC {
 	
+	@RequestMapping("/ok")
+	public String ok(
+			@CookieValue(name = "uid", defaultValue = "0") int uid,
+			Model model) {
+		System.out.println(uid);
+		return "/test.jsp";
+	}
+	
     @RequestMapping("/test")
-    public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse response) {
-        SysUtil.log("∑√Œ ≥…π¶");
-        ModelAndView mv = new ModelAndView();
-        return mv;
+	public String helloWorld(Model model) {
+    	model.addAttribute("info", "Hello");
+    	return "forward:/ok.html";
     }
 }

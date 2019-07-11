@@ -104,6 +104,7 @@ div.info {
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>
 <script src="./js/Jcalendar.js"></script>
+<script src="js/alert.js"></script>
 <script type="text/javascript">
 	function buy() {
 		alert('预览模式, 无法预定');

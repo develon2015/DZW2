@@ -11,7 +11,7 @@ public class DateUtil {
 	 * @param date2
 	 * @return
 	 */
-	public static int daysBetween(Date date1,Date date2){     
+	public static int daysBetween(Date date1, Date date2){     
         Calendar cal = Calendar.getInstance();     
         cal.setTime(date1);     
         long time1 = cal.getTimeInMillis();                  

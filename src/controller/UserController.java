@@ -129,7 +129,7 @@ public class UserController {
 			user.setEmail(email);
 			// 更新数据库
 			try {
-				if (user.updateDB()) {
+				if (user.commit()) {
 					// 成功
 					user2.update();
 					mv.setViewName("redirect:/user/show.html");
@@ -143,6 +143,62 @@ public class UserController {
 		}
 
 		mv.setViewName("/user/update.jsp");
+		return mv;
+	}
+
+	@RequestMapping("/user/uppswd")
+	public ModelAndView uppaswd(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("/user/uppswd.jsp");
+		User user = null;
+		if ((user = LoginController.getUser(request, response)) == null) {
+			mv.setViewName("redirect:/user/login.html");
+			return mv;
+		}
+		String req = request.getParameter("request");
+		
+		if (req != null && "update".equals(req)) {
+			// 处理修改请求
+			String po = request.getParameter("po"), p1 = request.getParameter("p1"),
+					p2 = request.getParameter("p2");
+			try {
+				po = po.trim();
+				p1 = p1.trim();
+				p2 = p2.trim();
+			} catch(Exception e) {}
+			
+			if (po == null || p1 == null || p2 == null
+					|| "".equals(po) || "".equals(p1) || "".equals(p2)) {
+				mv.addObject("info", "修改失败, 请检查输入");
+				return mv;
+			}
+			
+			if (!p1.equals(p2)) {
+				mv.addObject("info", "两次密码不一致");
+				return mv;
+			}
+			
+			// 更新数据库
+			try {
+				PreparedStatement psmt = DBI.getConnection().prepareStatement(
+						"UPDATE user SET passwd=MD5(MD5(?)) WHERE uid=? AND passwd=MD5(MD5(?))");
+				psmt.setString(1, p1);
+				psmt.setInt(2, user.getUid());
+				psmt.setString(3, po);
+				System.out.println(psmt);
+				int r = psmt.executeUpdate();
+				if (r == 1) {
+					// 成功
+					mv.addObject("info", "修改成功");
+					mv.addObject("action", "location.href = 'show.html';");
+					return mv;
+				} else {
+					mv.addObject("info", "修改失败, 请重新尝试");
+				}
+			} catch (Exception e) {
+				mv.addObject("info", "修改失败, " + e.getMessage());
+			}
+		}
+		
 		return mv;
 	}
 }
