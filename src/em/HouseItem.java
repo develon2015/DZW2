@@ -48,6 +48,7 @@ public class HouseItem {
 			}
 		} catch(Exception e) {
 			SysUtil.log(e);
+			throw new RuntimeException(e);
 		}
 	}
 	

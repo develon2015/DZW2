@@ -41,9 +41,9 @@ div.info {
 	<% HouseItem h = (HouseItem) request.getAttribute("house"); %>
 	<p class="title4"><%= h.name %></p>
 	<% if (h.enable == 0) %>
-		<h2 class="warning">正在审核中</h2>
+		<h2 style="color: black;">正在审核中</h2>
 	<% if (h.enable == 1) %>
-		<h2 class="warning">审核已通过</h2>
+		<h2 style="color: blue;">审核已通过</h2>
 	<% if (h.enable == 2) %>
 		<h2 class="warning">审核未通过</h2>
 	
@@ -85,7 +85,7 @@ div.info {
 	<p class="title">描述</p>
 	<div class="info">
 		<hr>
-			<p style="text-align: left;"><%= h.info.replace("\n", "<br>") %></p>
+			<p style="margin: 40px 200px; text-align: left;"><%= h.info.replace("\n", "<br>") %></p>
 		<hr>
 	</div>
 	

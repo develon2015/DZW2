@@ -38,13 +38,36 @@ public class UserController {
 			return mv;
 		}
 		
-		List<HouseItem> list = listLease(request, response);
 		mv.setViewName("/user/show_self.jsp");
+
+		List<HouseItem> list = listLease(request, response);
 		mv.addObject("listlease", list);
 		mv.addObject("user", LoginController.getUser(request, response));
+		
+		List<HouseItem> list2 = listorder(request, response);
+		mv.addObject("listorder", list2);
+		
 		return mv;
 	}
 	
+	private List<HouseItem> listorder(HttpServletRequest request, HttpServletResponse response) {
+		List<HouseItem> list = new ArrayList<HouseItem>();
+		try {
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM order WHERE uid_master=?");
+			psmt.setInt(1, LoginController.getUser(request, response).getUid());
+			System.out.println(psmt);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				list.add(new HouseItem(rs));
+			}
+			rs.close();
+			psmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	private List<HouseItem> listLease(HttpServletRequest request, HttpServletResponse response) {
 		List<HouseItem> list = new ArrayList<HouseItem>();
 		try {

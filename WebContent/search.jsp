@@ -42,6 +42,10 @@ body {
 		border-radius: 0px;
 		outline: none;
 	}
+	
+	td, th {
+		padding: 0px 20px;
+	}
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">

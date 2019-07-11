@@ -49,9 +49,10 @@ public class SearchController {
 			if ("".equals(q))
 				break;
 			try {
-				if (psmt == null || !DBI.isValid() || psmt.isClosed()) {
-					psmt = DBI.getConnection().prepareStatement(sql);
-				}
+//				if (psmt == null || !DBI.isValid() || psmt.isClosed()) {
+//					psmt = DBI.getConnection().prepareStatement(sql);
+//				}
+				psmt = DBI.getConnection().prepareStatement(sql);
 				
 				psmt.clearParameters();
 				psmt.setString(1, String.format("%%%s%%", q));

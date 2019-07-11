@@ -119,6 +119,11 @@ div.info {
 				d1.value + '&d2=' +
 				d2.value;
 	}
+	
+	<% String err = (String) request.getParameter("err");
+		if (err != null && !"".equals(err)) { %>
+	alert('<%= err %>');
+	<% } %>
 </script>
 </html>
 <%@ page trimDirectiveWhitespaces="true" %>
