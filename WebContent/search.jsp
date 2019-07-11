@@ -70,6 +70,7 @@ body {
 		<a href="?q=${ q }&page=<%= (p - 1) < 1 ? 1 : (p - 1) + "" %>">上一页</a>
 		<a href="?q=${ q }&page=<%= (p + 1) >= pn  ? (pn == 0 ? 1 : pn) : (p + 1) + "" %>">下一页</a>
 		<a href="?q=${ q }&page=${ pn == 0 ? 1 : pn }">尾页</a>
+		&nbsp;(<%= p %>/${ pn })
 	</p>
 	
 	<% if (request.getAttribute("nothing") != null) { %>
@@ -111,6 +112,7 @@ body {
 		<a href="?q=${ q }&page=<%= (p - 1) < 1 ? 1 : (p - 1) + "" %>">上一页</a>
 		<a href="?q=${ q }&page=<%= (p + 1) >= pn  ? (pn == 0 ? 1 : pn) : (p + 1) + "" %>">下一页</a>
 		<a href="?q=${ q }&page=${ pn == 0 ? 1 : pn }">尾页</a>
+		&nbsp;(<%= p %>/${ pn })
 	</p>
 	<% } %>
 

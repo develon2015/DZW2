@@ -39,7 +39,7 @@ div.info {
 </head>
 <body>
 	<% HouseItem h = (HouseItem) request.getAttribute("house"); %>
-	<p class="title"><%= h.name %></p>
+	<p class="title4"><%= h.name %></p>
 	<% if (h.enable == 0) %>
 		<h2 class="warning">正在审核中</h2>
 	<% if (h.enable == 1) %>

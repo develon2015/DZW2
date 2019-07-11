@@ -1,5 +1,11 @@
 package controller;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import common.DBI;
+import em.HouseItem;
 import em.User;
 
 @Controller
@@ -30,11 +38,31 @@ public class UserController {
 			return mv;
 		}
 		
+		List<HouseItem> list = listLease(request, response);
 		mv.setViewName("/user/show_self.jsp");
+		mv.addObject("listlease", list);
 		mv.addObject("user", LoginController.getUser(request, response));
 		return mv;
 	}
 	
+	private List<HouseItem> listLease(HttpServletRequest request, HttpServletResponse response) {
+		List<HouseItem> list = new ArrayList<HouseItem>();
+		try {
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM house WHERE uid_master=?");
+			psmt.setInt(1, LoginController.getUser(request, response).getUid());
+			System.out.println(psmt);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				list.add(new HouseItem(rs));
+			}
+			rs.close();
+			psmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	@RequestMapping("/user/update")
 	public ModelAndView update(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("/user/update.jsp");
@@ -68,7 +96,7 @@ public class UserController {
 				return mv;
 			}
 
-			if (!phone.matches("^1(\\d){10}$")) {
+			if (!phone.matches("^1[3578](\\d){9}$")) {
 				mv.addObject("info", "修改失败, 手机号不正确");
 				return mv;
 			}

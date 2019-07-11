@@ -39,7 +39,7 @@ div.info {
 </head>
 <body>
 	<% HouseItem h = (HouseItem) request.getAttribute("house"); %>
-	<p class="title"><%= h.name %></p>
+	<p class="title4"><%= h.name %></p>
 	
 	<table style="margin: auto">
 		<tr>

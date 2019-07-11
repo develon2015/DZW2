@@ -89,10 +89,10 @@ public class SearchController {
 		HouseItem enext = null;
 		for (int i = 0; i < ls.size(); i ++ ) {
 			
-			HouseItem e = ls.get(i); // 当前元素(0, 1, ..., n-1)
+			HouseItem e = ls.get(i); // 当前元素n(0, 1, ..., size-1)
 			int weight = e.weight;
 			
-			// n与[n+1, n-1]比较
+			// n与[n+1, size-1]比较
 			// 最大的是谁?
 			for (int j = i + 1; j < ls.size(); j ++ ) {
 				enext = ls.get(j);
@@ -125,8 +125,8 @@ public class SearchController {
 		
 		List<HouseItem> list = list(q);
 		int sub = (page - 1) * MAX;
-		int sup = page * MAX;
-		sub = sub > list.size() ? 0 : sub;
+		sub = sub >= list.size() ? 0 : sub;
+		int sup = sub + MAX;
 		sup = sup > list.size() ? list.size() : sup;
 		List<HouseItem> list_limit = list.subList(sub, sup);
 		
