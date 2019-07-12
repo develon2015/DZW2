@@ -49,7 +49,19 @@
 	<div class="info">
 		<hr>
 <table>
-	
+	<% List<?> listorder = (List<?>) request.getAttribute("listorder");
+		int i2 = 1;
+		if (listorder != null)
+		for (Object e : listorder) {
+			Order h = (Order) e;%>
+		<tr>
+			<td style="text-align: left;"><%= i2++ %></td>
+			<td><div><%= h.uid %></div></td>
+		</tr>
+		<tr>
+		<td colspan="15"><hr></td>
+		</tr>
+	<% } %>
 </table>
 		<hr>
 	</div>
