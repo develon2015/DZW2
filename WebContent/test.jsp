@@ -11,7 +11,7 @@ Hello
 </body>
 <script src="js/alert.js"></script>
 <script type="text/javascript">
-var info = "${ info }";
+var info = "a<br>b";
 if (info !== "")
 	alert(info, function() { ${ action } });
 </script>

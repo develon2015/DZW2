@@ -18,7 +18,7 @@ public class TestSpringMVC {
 	
     @RequestMapping("/test")
 	public String helloWorld(Model model) {
-    	model.addAttribute("info", "Hello");
+    	model.addAttribute("info", "Hello\\nHello");
     	return "forward:/ok.html";
     }
 }

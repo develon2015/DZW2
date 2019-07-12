@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import common.DBI;
+import common.SysUtil;
 import em.HouseItem;
+import em.Order;
 import em.User;
 
 @Controller
@@ -32,9 +34,17 @@ public class UserController {
 			return mv;
 		}
 		
+		User user = LoginController.getUser(request, response);
 		
-		if (LoginController.getUser(request, response) == null) {
+		if (user == null) {
 			mv.setViewName("redirect:/user/login.html");
+			return mv;
+		}
+		
+		if (SysUtil.get("admin").equals(user.getName()) ) {
+			mv.setViewName("/admin.jsp");
+			List<HouseItem> ls = listHouse(request, response);
+			mv.addObject("list", ls);
 			return mv;
 		}
 		
@@ -44,21 +54,39 @@ public class UserController {
 		mv.addObject("listlease", list);
 		mv.addObject("user", LoginController.getUser(request, response));
 		
-		List<HouseItem> list2 = listorder(request, response);
+		List<Order> list2 = listorder(request, response);
 		mv.addObject("listorder", list2);
 		
 		return mv;
 	}
 	
-	private List<HouseItem> listorder(HttpServletRequest request, HttpServletResponse response) {
-		List<HouseItem> list = new ArrayList<HouseItem>();
+	/** 管理员接口 */
+	private List<HouseItem> listHouse(HttpServletRequest request, HttpServletResponse response) {
+		List<HouseItem> ls = new ArrayList<HouseItem>();
 		try {
-			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM order WHERE uid_master=?");
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM house");
+			System.out.println(psmt);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				ls.add(new HouseItem(rs));
+			}
+			rs.close();
+			psmt.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ls;
+	}
+
+	private List<Order> listorder(HttpServletRequest request, HttpServletResponse response) {
+		List<Order> list = new ArrayList<Order>();
+		try {
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM orde WHERE uid=?");
 			psmt.setInt(1, LoginController.getUser(request, response).getUid());
 			System.out.println(psmt);
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
-				list.add(new HouseItem(rs));
+				list.add(new Order(rs));
 			}
 			rs.close();
 			psmt.close();

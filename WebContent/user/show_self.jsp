@@ -49,32 +49,7 @@
 	<div class="info">
 		<hr>
 <table>
-	<% List<?> list2 = (List<?>) request.getAttribute("listorder");
-		int i2 = 1;
-		if (list2 != null)
-		for (Object e : list2) {
-			HouseItem h = (HouseItem) e;%>
-		<tr>
-			<td style="text-align: left;"><%= i2++ %></td>
-			<td><div><%= h.name %></div></td>
-			<td><div><%= h.address %></div></td>
-			<td><div><%= h.area %>&nbsp;m<sup>2</sup></div></td>
-			<td><div>可住<%= h.pn %>人</div></td>
-			<td><div>可入住<%= h.time_short %>~<%= h.time_long %>天</div></td>
-			<td><div><%= h.price %>元/天</div></td>
-			<td><div>发布于<%= h.date %></div></td>
-			<% if (h.enable == 0) %>
-			<td><div>正在审核中</div></td>
-			<% if (h.enable == 1) %>
-			<td><div style="color: blue;">已通过审核</div></td>
-			<% if (h.enable == 2) %>
-			<td><div class="warning">审核未通过</div></td>
-			<td style="text-align: right;"><div><a href="${ pageContext.request.contextPath }/lease_show.html?id=<%= h.id %>">查看</a></div></td>
-		</tr>
-		<tr>
-		<td colspan="15"><hr></td>
-		</tr>
-	<% } %>
+	
 </table>
 		<hr>
 	</div>

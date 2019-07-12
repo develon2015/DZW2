@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>轻松短租网</title>
+<link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
 </head>
 <body>
 </body>

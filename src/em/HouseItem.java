@@ -26,7 +26,7 @@ public class HouseItem {
 	public double price;
 	public double area;
 	
-	public int enable; // 0审核中 1通过 2拒绝
+	public int enable; // 0审核中 1通过 2拒绝 3下架
 	public Timestamp date;
 	
 	private static final String sql = 
@@ -93,5 +93,24 @@ public class HouseItem {
 		String p = String.format("<img src='%s'/><span>%s</span>", imgs[0], name);
 		System.out.println(p);
 		return p;
+	}
+	
+	public boolean setStatus(int statu) {
+		try {
+			PreparedStatement psmt = DBI.getConnection().prepareStatement(
+					"UPDATE house SET enable=? WHERE id=?");
+			psmt.setInt(1, statu);
+			psmt.setInt(2, this.id);
+			System.out.println(psmt);
+			int r = psmt.executeUpdate();
+			if (r == 1) {
+				psmt.close();
+				return true;
+			}
+			psmt.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
 	}
 }

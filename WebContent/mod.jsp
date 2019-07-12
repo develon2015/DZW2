@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="em.*" %>
 <!DOCTYPE HTML>
 <html lang="zh">
 <head>
@@ -15,8 +17,14 @@ body {
 </head>
 <body>
 	<p class="title">标题</p>
-	
+
 	<jsp:include page="/css/footer.jsp"></jsp:include>
 </body>
+<script src="${ pageContext.request.contextPath }/js/alert.js"></script>
+<script type="text/javascript">
+var info = "${ info }";
+if (info !== "")
+	alert(info, function() { ${ action } });
+</script>
 </html>
 <%@ page trimDirectiveWhitespaces="true" %>

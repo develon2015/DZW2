@@ -1,10 +1,13 @@
 function alert(data, callback) { //回调函数
-    var alert_bg = document.createElement('div');
-    alert_box = document.createElement('div'),
+    var alert_bg = document.createElement('div'),
+    	alert_box = document.createElement('div'),
         alert_text = document.createElement('div'),
         alert_btn = document.createElement('div'),
-        textNode = document.createTextNode(data ? data : ''),
+        //textNode = document.createTextNode(data ? data : ''),
+        textNode = document.createElement("span"),
         btnText = document.createTextNode('确 定');
+    
+    textNode.innerHTML = data;
 
     // 控制样式
     css(alert_bg, {

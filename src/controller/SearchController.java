@@ -24,7 +24,7 @@ public class SearchController {
 //	private static PreparedStatement psmtn = null;
 	
 	private static final String sql = 
-			"SELECT * FROM house WHERE enable=FALSE AND " +
+			"SELECT * FROM house WHERE enable=1 AND " +
 			"(name LIKE ? OR address LIKE ?)";
 	
 //	private static final String sqln = // 查询结果数

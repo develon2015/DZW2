@@ -24,7 +24,7 @@ public class HouseController {
 	private static PreparedStatement psmt = null;
 	
 	private static final String sql = 
-			"SELECT * FROM house WHERE enable=FALSE AND " +
+			"SELECT * FROM house WHERE enable=1 AND " +
 			"id=?";
 	
 	@RequestMapping("/house")
@@ -36,6 +36,7 @@ public class HouseController {
 			psmt = DBI.getConnection().prepareStatement(sql);
 			psmt.clearParameters();
 			psmt.setInt(1, id);
+			System.out.println(psmt);
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				house = new HouseItem(rs);
@@ -103,9 +104,10 @@ public class HouseController {
 			}
 			
 			// 冲突检测
-			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM order WHERE hid=? AND satus=1");
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM orde WHERE hid=? AND status=1");
 			psmt.clearParameters();
 			psmt.setInt(1, hid);
+			System.out.println(psmt);
 			ResultSet rs = psmt.executeQuery();
 			List<Order> list = new ArrayList<Order>();
 			while (rs.next()) {
@@ -119,31 +121,33 @@ public class HouseController {
 
 			if (list.size() != 0) {
 				// 至少一个冲突订单
-				String info = "以下日期已被预定, 请重新选择";
+				System.out.println(list.size() + "个订单冲突");
+				String info = "以下日期已被订购, 请重新选择";
 				model.addAttribute("list", list);
 				for (int i = 0; i < list.size(); i ++ ) {
-					info += "\n" + i + ": " + list.get(i).times.toString() + " ~ " + list.get(i).timee.toString();
+					info += "\n" + (i + 1) + ": " + list.get(i).times.toString() + " ~ " + list.get(i).timee.toString();
 				}
-				model.addAttribute("err", info);
+				SysUtil.log("info", info);
+				model.addAttribute("err", info.replace("\n", "<br>"));
 				return "forward:/house.html";
 			}
 			/*
-CREATE TABLE IF NOT EXISTS order(
+CREATE TABLE IF NOT EXISTS orde(
 	id INT AUTO_INCREMENT, 
 	hid INT NOT NULL,			#House ID
 	uid INT NOT NULL,			#预定者
-	times DATETIIME NOT NULL,
-	timee DATETIIME NOT NULL,
+	times DATE NOT NULL,
+	timee DATE NOT NULL,
 	n INT NOT NULL,
 	price DOUBLE NOT NULL,			#价格
-	date DATETIIME DEFAULT NOW(),
+	date DATETIME NOT NULL DEFAULT NOW(),
 	status int NOT NULL DEFAULT 0, # 状态 0待处理 1OK 2拒绝
 	PRIMARY KEY(id)
 )DEFAULT CHARSET=UTF8;
 			 */
 			System.out.println("订单无冲突, 继续处理");
 			psmt = DBI.getConnection().prepareStatement(
-					"INSERT INTO order(hid, uid, times, timee, n, price, date, status) " +
+					"INSERT INTO orde(hid, uid, times, timee, n, price, date, status) " +
 					"VALUE(?, ?, ?, ?, ?, ?, NOW(), 0)");
 			psmt.setInt(1, hid);
 			psmt.setInt(2, user.getUid());
@@ -157,7 +161,7 @@ CREATE TABLE IF NOT EXISTS order(
 				model.addAttribute("err", "订购失败, 请稍后再试");
 				return "forward:/house.html";
 			}
-			model.addAttribute("err", "订购成功");
+			model.addAttribute("err", "预定成功, 请向商家支付" + n * house.price + "元");
 			model.addAttribute("action", String.format("location.href = '%s/user/show.html';", SysUtil.get("path")) );
 			return "forward:/house.html";
 		} catch(Exception e) {
