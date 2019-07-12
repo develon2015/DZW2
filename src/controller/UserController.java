@@ -41,7 +41,7 @@ public class UserController {
 			return mv;
 		}
 		
-		if (SysUtil.get("admin").equals(user.getName()) ) {
+		if (SysUtil.get("admin").equals(user.getName()) ) { // 系统管理员入口
 			mv.setViewName("/admin.jsp");
 			List<HouseItem> ls = listHouse(request, response);
 			mv.addObject("list", ls);
@@ -64,7 +64,7 @@ public class UserController {
 	private List<HouseItem> listHouse(HttpServletRequest request, HttpServletResponse response) {
 		List<HouseItem> ls = new ArrayList<HouseItem>();
 		try {
-			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM house");
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM house GROUP BY id DESC");
 			System.out.println(psmt);
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
@@ -81,7 +81,7 @@ public class UserController {
 	private List<Order> listorder(HttpServletRequest request, HttpServletResponse response) {
 		List<Order> list = new ArrayList<Order>();
 		try {
-			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM orde WHERE uid=?");
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM orde WHERE uid=? GROUP BY id DESC");
 			psmt.setInt(1, LoginController.getUser(request, response).getUid());
 			System.out.println(psmt);
 			ResultSet rs = psmt.executeQuery();
@@ -99,7 +99,7 @@ public class UserController {
 	private List<HouseItem> listLease(HttpServletRequest request, HttpServletResponse response) {
 		List<HouseItem> list = new ArrayList<HouseItem>();
 		try {
-			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM house WHERE uid_master=?");
+			PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM house WHERE uid_master=? GROUP BY id DESC");
 			psmt.setInt(1, LoginController.getUser(request, response).getUid());
 			System.out.println(psmt);
 			ResultSet rs = psmt.executeQuery();

@@ -3,6 +3,7 @@ package em;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * <pre>
@@ -26,6 +27,8 @@ public class Order {
 	public Date times, timee;
 	public Timestamp date;
 	
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	
 	public Order(ResultSet rs) {
 		create(rs);
 	}
@@ -37,8 +40,8 @@ public class Order {
 			uid = rs.getInt("uid");
 			price = rs.getDouble("price");
 			n = rs.getInt("n");
-			times = rs.getDate("times");
-			timee = rs.getDate("timee");
+			times = new Date(dateFormat.parse(rs.getString("times")).getTime());
+			timee = new Date(dateFormat.parse(rs.getString("timee")).getTime());
 			date = rs.getTimestamp("date");
 		} catch(Exception e) {
 			System.out.println(e.getMessage());

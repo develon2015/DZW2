@@ -112,6 +112,9 @@ public class HouseController {
 			List<Order> list = new ArrayList<Order>();
 			while (rs.next()) {
 				Order o = new Order(rs);
+				System.out.printf("%s, %s  %s, %s\n", date1, date2, o.times, o.timee);
+				System.out.println((date1.compareTo(o.timee) >= 0));
+				System.out.println(date2.compareTo(o.times) <= 0);
 				if (!(date1.compareTo(o.timee) >= 0 || date2.compareTo(o.times) <= 0)) {
 					list.add(o);
 				}
@@ -151,8 +154,8 @@ CREATE TABLE IF NOT EXISTS orde(
 					"VALUE(?, ?, ?, ?, ?, ?, NOW(), 0)");
 			psmt.setInt(1, hid);
 			psmt.setInt(2, user.getUid());
-			psmt.setDate(3, date1);
-			psmt.setDate(4, date2);
+			psmt.setString(3, date1.toString());
+			psmt.setString(4, date2.toString());
 			psmt.setInt(5, n);
 			psmt.setDouble(6, n * house.price);
 			System.out.println(psmt);

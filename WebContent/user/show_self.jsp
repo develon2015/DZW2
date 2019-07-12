@@ -53,10 +53,10 @@
 		int i2 = 1;
 		if (listorder != null)
 		for (Object e : listorder) {
-			Order h = (Order) e;%>
+			Order o = (Order) e;%>
 		<tr>
 			<td style="text-align: left;"><%= i2++ %></td>
-			<td><div><%= h.uid %></div></td>
+			<td><div><%= o.uid %></div></td>
 		</tr>
 		<tr>
 		<td colspan="15"><hr></td>
@@ -86,13 +86,31 @@
 			<td><div>可入住<%= h.time_short %>~<%= h.time_long %>天</div></td>
 			<td><div><%= h.price %>元/天</div></td>
 			<td><div>发布于<%= h.date %></div></td>
-			<% if (h.enable == 0) %>
-			<td><div>正在审核中</div></td>
-			<% if (h.enable == 1) %>
-			<td><div style="color: blue;">已通过审核</div></td>
-			<% if (h.enable == 2) %>
-			<td><div class="warning">审核未通过</div></td>
+			
+			<% if (h.enable == 0) { %>
+				<td><div>等待审核</div></td>
+			<% } %>
+			<% if (h.enable == 1) { %>
+				<td><div style="color: blue;">已通过审核</div></td>
+			<% } %>
+			<% if (h.enable == 2) { %>
+				<td><div class="warning">审核未通过</div></td>
+			<% } %>
+			<% if (h.enable == 3) { %>
+				<td><div class="warning">商家已下架</div></td>
+			<% } %>
+			<% if (h.enable == 4) { %>
+				<td><div class="warning">管理员下架</div></td>
+			<% } %>
+			
 			<td style="text-align: right;"><div><a href="${ pageContext.request.contextPath }/lease_show.html?id=<%= h.id %>">查看</a></div></td>
+			
+			<% if (h.enable == 3) { %>
+				<td><div><a href="${ pageContext.request.contextPath }/mmgr.html?id=<%= h.id %>&r=0">重新审核</a></div></td>
+			<% } %>
+			<% if (h.enable == 1) { %>
+				<td><div><a href="${ pageContext.request.contextPath }/mmgr.html?id=<%= h.id %>&r=3">下架</a></div></td>
+			<% } %>
 		</tr>
 		<tr>
 		<td colspan="15"><hr></td>

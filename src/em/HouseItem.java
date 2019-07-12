@@ -26,7 +26,7 @@ public class HouseItem {
 	public double price;
 	public double area;
 	
-	public int enable; // 0审核中 1通过 2拒绝 3下架
+	public int enable; // 0审核中 1通过 2拒绝 3商家下架 4管理员下架
 	public Timestamp date;
 	
 	private static final String sql = 

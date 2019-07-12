@@ -54,7 +54,7 @@ body {
 			<% if (h.enable == 4) { %>
 				<td><div class="warning">管理员下架</div></td>
 			<% } %>
-			<td style="text-align: center;"><div><a target="__blank" href="${ pageContext.request.contextPath }/lease_show.html?id=<%= h.id %>">查看</a></div></td>
+			<td style="text-align: center;"><div><a target="_blank" href="${ pageContext.request.contextPath }/lease_show.html?id=<%= h.id %>">查看</a></div></td>
 
 			<% if (h.enable == 0) { %>
 				<td><div><a href="${ pageContext.request.contextPath }/mgr.html?id=<%= h.id %>&r=1">通过</a></div></td>

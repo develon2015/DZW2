@@ -40,12 +40,21 @@ div.info {
 <body>
 	<% HouseItem h = (HouseItem) request.getAttribute("house"); %>
 	<p class="title4"><%= h.name %></p>
-	<% if (h.enable == 0) %>
+	<% if (h.enable == 0) { %>
 		<h2 style="color: black;">正在审核中</h2>
-	<% if (h.enable == 1) %>
-		<h2 style="color: blue;">审核已通过</h2>
-	<% if (h.enable == 2) %>
+	<% } %>
+	<% if (h.enable == 1) { %>
+		<h2 style="color: blue;">已通过审核</h2>
+	<% } %>
+	<% if (h.enable == 2) { %>
 		<h2 class="warning">审核未通过</h2>
+	<% } %>
+	<% if (h.enable == 3) { %>
+		<h2 class="warning">商家已下架</h2>
+	<% } %>
+	<% if (h.enable == 4) { %>
+		<h2 class="warning">管理员下架</h2>
+	<% } %>	
 	
 	<table style="margin: auto">
 		<tr>
