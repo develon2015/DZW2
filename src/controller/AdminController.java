@@ -1,11 +1,17 @@
 package controller;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import common.DBI;
 import common.SysUtil;
 import em.HouseItem;
 import em.Order;
@@ -104,7 +110,61 @@ public class AdminController {
 		HouseItem h = new HouseItem(o.hid);
 		System.out.printf("%d, %d, %d, %d\n", h.uid, master.getUid(), r, o.status);
 		
+		// guest
+		if (o.uid == master.getUid() && r == 2 && (o.status == 0 || o.status == 1)) {
+			boolean n = o.setStatus(r);
+			model.addAttribute("info", n ? "已取消预定" : "操作失败");
+			model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
+			return "/alert.jsp";
+		}
+		
 		if (h.uid == master.getUid() && r == 1 && o.status == 0) {
+			// 冲突检测
+			try {
+				java.sql.Date date1 = o.times;
+				java.sql.Date date2 = o.timee;
+//				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//				java.sql.Date date1 = new java.sql.Date(dateFormat.parse(o.times.toString()).getTime());
+//				java.sql.Date date2 = new java.sql.Date(dateFormat.parse(o.timee.toString()).getTime());
+				
+				PreparedStatement psmt = DBI.getConnection().prepareStatement("SELECT * FROM orde WHERE hid=? AND status=1");
+				psmt.clearParameters();
+				psmt.setInt(1, o.hid);
+				System.out.println(psmt);
+				ResultSet rs = psmt.executeQuery();
+				List<Order> list = new ArrayList<Order>();
+				while (rs.next()) {
+					Order o2 = new Order(rs);
+					System.out.printf("%s, %s  %s, %s\n", date1, date2, o2.times, o2.timee);
+					System.out.println((date1.compareTo(o2.timee) >= 0));
+					System.out.println(date2.compareTo(o2.times) <= 0);
+					if (!(date1.compareTo(o2.timee) >= 0 || date2.compareTo(o2.times) <= 0)) {
+						list.add(o2);
+					}
+				}
+				rs.close();
+				psmt.close();
+
+				if (list.size() != 0) {
+					// 至少一个冲突订单
+					System.out.println(list.size() + "个订单冲突");
+					String info = "订单冲突, 以下日期已被订购";
+					model.addAttribute("list", list);
+					for (int i = 0; i < list.size(); i ++ ) {
+						info += "\n" + (i + 1) + ": " + list.get(i).times.toString() + " ~ " + list.get(i).timee.toString();
+					}
+					SysUtil.log("info", info);
+					model.addAttribute("info", info.replace("\n", "<br>"));
+					model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
+					return "/alert.jsp";
+				}
+			} catch(Exception e) {
+				SysUtil.log(e);
+				model.addAttribute("info", e.getMessage());
+				model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
+				return "/alert.jsp";
+			}
+			
 			boolean n = o.setStatus(r);
 			model.addAttribute("info", n ? "已同意订单" : "操作失败");
 			model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );

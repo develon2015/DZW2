@@ -88,10 +88,24 @@
 			<% } else { %>
 				<td><div><%= "我的订单" %></div></td>
 				<td><div>订单号:&nbsp;<%= o.id %></div></td>
-				<td><div><%= h.name %></div></td>
-				<td><div>时间:&nbsp;<%= o.date %></div></td>
+				<td><a href="${ pageContext.request.contextPath }/house.html?id=<%= h.id %>"><%= h.name %></a></td>
+				<td><%= o.times %> ~ <%= o.timee %></td>
+				<td style="text-align: right;"><%= o.price %>元</td>
+				<td><%= guest.getName() %>(<%= guest.getPhone() %>)</td>
+				<td><div>下单时间:&nbsp;<%= o.date %></div></td>
+
+				<% if (o.status == 0) { %>
+					<td colspan="1">等待处理</td>
+					<td><a href="${ pageContext.request.contextPath }/omgr.html?id=<%= o.id %>&r=2">取消预定</a></td>
+				<% } %>
+				<% if (o.status == 1) { %>
+					<td colspan="1" style="color: blue;">预定成功</td>
+					<td><a href="${ pageContext.request.contextPath }/omgr.html?id=<%= o.id %>&r=2">取消预定</a></td>
+				<% } %>
+				<% if (o.status == 2) { %>
+					<td colspan="2" style="color: red;">交易已取消</td>
+				<% } %>
 			<% } %>
-			
 		</tr>
 		
 		<tr>
