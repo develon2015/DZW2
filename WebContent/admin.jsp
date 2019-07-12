@@ -32,7 +32,7 @@ body {
 		<tr>
 			<td style="text-align: left;"><%= i++ %></td>
 			<td><div><%= h.name %></div></td>
-			<td><div><%= h.address %></div></td>
+			<td style="padding: 20px;"><div><%= h.address %></div></td>
 			<td><div><%= h.area %>&nbsp;m<sup>2</sup></div></td>
 			<td><div>可住<%= h.pn %>人</div></td>
 			<td><div>可入住<%= h.time_short %>~<%= h.time_long %>天</div></td>

@@ -74,6 +74,13 @@ public class AdminController {
 			return "/alert.jsp";
 		}
 		
+		if (r == 3 && h.enable == 0) {
+			boolean n = h.setStatus(r);
+			model.addAttribute("info", n ? "取消成功, 您可以重新申请审核" : "操作失败");
+			model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
+			return "/alert.jsp";
+		}
+		
 		model.addAttribute("info", "不允许的操作");
 		model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
 		return "/alert.jsp";

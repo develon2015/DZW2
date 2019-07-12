@@ -57,9 +57,10 @@
 		<tr>
 			<td style="text-align: left;"><%= i2++ %></td>
 			<td><div><%= o.uid %></div></td>
+			<td><div><%= o.date %></div></td>
 		</tr>
 		<tr>
-		<td colspan="15"><hr></td>
+			<td colspan="15"><hr></td>
 		</tr>
 	<% } %>
 </table>
@@ -110,6 +111,9 @@
 			<% } %>
 			<% if (h.enable == 1) { %>
 				<td><div><a href="${ pageContext.request.contextPath }/mmgr.html?id=<%= h.id %>&r=3">下架</a></div></td>
+			<% } %>
+			<% if (h.enable == 0) { %>
+				<td><div><a href="${ pageContext.request.contextPath }/mmgr.html?id=<%= h.id %>&r=3">取消</a></div></td>
 			<% } %>
 		</tr>
 		<tr>
