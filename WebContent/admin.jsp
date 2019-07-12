@@ -31,6 +31,7 @@ body {
 			HouseItem h = (HouseItem) e;%>
 		<tr>
 			<td style="text-align: left;"><%= i++ %></td>
+			<td><div>No.<%= h.id %></div></td>
 			<td><div><%= h.name %></div></td>
 			<td style="padding: 20px;"><div><%= h.address %></div></td>
 			<td><div><%= h.area %>&nbsp;m<sup>2</sup></div></td>

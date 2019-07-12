@@ -1,3 +1,4 @@
+<%@page import="controller.LoginController"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
@@ -49,15 +50,27 @@
 	<div class="info">
 		<hr>
 <table>
+	<% User u = LoginController.getUser(request, response); %>
 	<% List<?> listorder = (List<?>) request.getAttribute("listorder");
 		int i2 = 1;
 		if (listorder != null)
 		for (Object e : listorder) {
-			Order o = (Order) e;%>
+			Order o = (Order) e;
+			HouseItem h = new HouseItem(o.hid);
+			
+			%>
 		<tr>
 			<td style="text-align: left;"><%= i2++ %></td>
-			<td><div><%= o.uid %></div></td>
-			<td><div><%= o.date %></div></td>
+			
+			<% if (h.uid == u.getUid()) { %>
+			<td><div><%= "租客订单" %></div></td>
+			<% } else { %>
+			<td><div><%= "我的订单" %></div></td>
+			<% } %>
+			
+			<td><div>订单号:&nbsp;<%= o.id %></div></td>
+			<td><div><%= h.name %></div></td>
+			<td><div>时间:&nbsp;<%= o.date %></div></td>
 		</tr>
 		<tr>
 			<td colspan="15"><hr></td>
@@ -80,6 +93,7 @@
 			HouseItem h = (HouseItem) e;%>
 		<tr>
 			<td style="text-align: left;"><%= i++ %></td>
+			<td><div>No.<%= h.id %></div></td>
 			<td><div><%= h.name %></div></td>
 			<td><div><%= h.address %></div></td>
 			<td><div><%= h.area %>&nbsp;m<sup>2</sup></div></td>
