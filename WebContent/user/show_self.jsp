@@ -25,7 +25,7 @@
 	}
 
 	td, th {
-		padding: 0px 20px;
+		padding: 0px 10px;
 	}
 </style>
 </head>
@@ -57,21 +57,43 @@
 		for (Object e : listorder) {
 			Order o = (Order) e;
 			HouseItem h = new HouseItem(o.hid);
-			
+			User guest = new User(o.uid);
 			%>
 		<tr>
 			<td style="text-align: left;"><%= i2++ %></td>
 			
 			<% if (h.uid == u.getUid()) { %>
-			<td><div><%= "租客订单" %></div></td>
+				<td><div><%= "租客订单" %></div></td>
+				<td><div>订单号:&nbsp;<%= o.id %></div></td>
+				<td><a href="${ pageContext.request.contextPath }/lease_show.html?id=<%= h.id %>"><%= h.name %></a></td>
+				<td><%= o.times %> ~ <%= o.timee %></td>
+				<td style="text-align: right;"><%= o.price %>元</td>
+				<td><%= guest.getName() %>(<%= guest.getPhone() %>)</td>
+				<td><div>下单时间:&nbsp;<%= o.date %></div></td>
+
+				<% if (o.status == 0) { %>
+					<td>待处理</td>
+					<td><a href="${ pageContext.request.contextPath }/omgr.html?id=<%= o.id %>&r=1">同意</a></td>
+					<td><a href="${ pageContext.request.contextPath }/omgr.html?id=<%= o.id %>&r=2">拒绝</a></td>
+				<% } %>
+				<% if (o.status == 1) { %>
+					<td colspan="2" style="color: blue;">已同意订单</td>
+					<td><a href="${ pageContext.request.contextPath }/omgr.html?id=<%= o.id %>&r=2">取消</a></td>
+				<% } %>
+				<% if (o.status == 2) { %>
+					<td colspan="2" style="color: red;">已取消订单</td>
+				<% } %>
+			
+			
 			<% } else { %>
-			<td><div><%= "我的订单" %></div></td>
+				<td><div><%= "我的订单" %></div></td>
+				<td><div>订单号:&nbsp;<%= o.id %></div></td>
+				<td><div><%= h.name %></div></td>
+				<td><div>时间:&nbsp;<%= o.date %></div></td>
 			<% } %>
 			
-			<td><div>订单号:&nbsp;<%= o.id %></div></td>
-			<td><div><%= h.name %></div></td>
-			<td><div>时间:&nbsp;<%= o.date %></div></td>
 		</tr>
+		
 		<tr>
 			<td colspan="15"><hr></td>
 		</tr>

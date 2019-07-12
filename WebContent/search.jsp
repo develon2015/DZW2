@@ -46,6 +46,10 @@ body {
 	td, th {
 		padding: 0px 20px;
 	}
+	
+	.img {
+		width: 20px;
+	}
 </style>
 <link rel="icon" href="${ pageContext.request.contextPath }/favicon.ico">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css">
@@ -96,7 +100,7 @@ body {
 		for (Object e : list) {
 			HouseItem h = (HouseItem) e;%>
 		<tr>
-			<td style="text-align: left;"><div><img height="250px" src='<%= h.icon %>'/></div></td>
+			<td style="text-align: left;"><div><img class="img" 250px" src='<%= h.icon %>'/></div></td>
 			<td><div><%= h.name %></div></td>
 			<td><div><%= h.address %></div></td>
 			<td><div><%= h.area %>&nbsp;m<sup>2</sup></div></td>
@@ -155,6 +159,11 @@ body {
 		}
 		
 		setTimeout(t2, 1);
+		
+		var s = document.createElement("style");
+		s.setAttribute("type", "text/css");
+		s.append(".img {width: " + (window.screen.width * 0.3) + "px;}");
+		document.getElementsByTagName("head")[0].appendChild(s);
 	</script>
 </html>
 <%@ page trimDirectiveWhitespaces="true" %>

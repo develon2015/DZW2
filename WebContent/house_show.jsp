@@ -85,9 +85,9 @@ div.info {
 	
 	<div>
 	<br>
-	<font style="color: red; font-size: 18px;">选择入住时间</font><br><br>
 	<input id="d1" class="form-control"  type="text" value="" placeholder="请选择时间" readonly/>&nbsp;~
 	<input id="d2" class="form-control"  type="text" value="" placeholder="请选择时间" readonly/><br>
+	<font style="color: red; font-size: 18px;">选择入住时间</font><br><br>
 	<button onclick="buy()">立即预定</button>
 	</div>
 	

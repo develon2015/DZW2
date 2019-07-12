@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import common.SysUtil;
 import em.HouseItem;
+import em.Order;
 import em.User;
 
 @Controller
@@ -81,6 +82,49 @@ public class AdminController {
 			return "/alert.jsp";
 		}
 		
+		model.addAttribute("info", "不允许的操作");
+		model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
+		return "/alert.jsp";
+	}
+	
+	@RequestMapping("/omgr")
+	public String omgr(
+			@CookieValue(name = "uid") int uid,
+			@RequestParam(name = "id") int id,
+			@RequestParam(name = "r") int r,
+			Model model) {
+		User master = LoginController.getUser(uid);
+		if (master == null) {
+			model.addAttribute("info", "您尚未登录, 前往登录");
+			model.addAttribute("action", String.format("location.href = '%s/user/login.html'", SysUtil.get("path")) );
+			return "/alert.jsp";
+		}
+		
+		Order o = new Order(id);
+		HouseItem h = new HouseItem(o.hid);
+		System.out.printf("%d, %d, %d, %d\n", h.uid, master.getUid(), r, o.status);
+		
+		if (h.uid == master.getUid() && r == 1 && o.status == 0) {
+			boolean n = o.setStatus(r);
+			model.addAttribute("info", n ? "已同意订单" : "操作失败");
+			model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
+			return "/alert.jsp";
+		}
+
+		if (h.uid == master.getUid() && r == 2 && o.status == 0) {
+			boolean n = o.setStatus(r);
+			model.addAttribute("info", n ? "已拒绝订单" : "操作失败");
+			model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
+			return "/alert.jsp";
+		}
+
+		if (h.uid == master.getUid() && r == 2 && o.status == 1) {
+			boolean n = o.setStatus(r);
+			model.addAttribute("info", n ? "已取消订单" : "操作失败");
+			model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
+			return "/alert.jsp";
+		}
+
 		model.addAttribute("info", "不允许的操作");
 		model.addAttribute("action", String.format("location.href = '%s/user/show.html'", SysUtil.get("path")) );
 		return "/alert.jsp";
