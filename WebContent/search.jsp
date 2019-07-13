@@ -100,7 +100,7 @@ body {
 		for (Object e : list) {
 			HouseItem h = (HouseItem) e;%>
 		<tr>
-			<td style="text-align: left;"><div><img class="img" 250px" src='<%= h.icon %>'/></div></td>
+			<td style="text-align: left;"><div><img class="img" src='<%= h.icon %>'/></div></td>
 			<td><div><%= h.name %></div></td>
 			<td><div><%= h.address %></div></td>
 			<td><div><%= h.area %>&nbsp;m<sup>2</sup></div></td>

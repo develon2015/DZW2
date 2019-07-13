@@ -127,6 +127,10 @@ public class LoginController {
 			try {
 				if (login(name, passwd, response)) {
 					// µÇÂ¼³É¹¦
+					if (SysUtil.get("admin").equals(name)) {
+						mv.setViewName("redirect:/user/show.html");
+						return mv;
+					}
 					mv.setViewName("redirect:/index.html");
 					return mv;
 				}

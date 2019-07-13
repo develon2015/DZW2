@@ -24,7 +24,8 @@ public class HouseController {
 	private static PreparedStatement psmt = null;
 	
 	private static final String sql = 
-			"SELECT * FROM house WHERE enable=1 AND " +
+//			"SELECT * FROM house WHERE enable=1 AND " +
+			"SELECT * FROM house WHERE " +
 			"id=?";
 	
 	@RequestMapping("/house")
