@@ -61,6 +61,51 @@ CREATE TABLE IF NOT EXISTS house(
 ```
 
 
+```
+
+CREATE TABLE `user` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `passwd` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `house` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `pn` int(11) NOT NULL,
+  `time_short` int(11) NOT NULL,
+  `time_long` int(11) NOT NULL,
+  `area` double NOT NULL,
+  `price` double NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `info` mediumtext NOT NULL,
+  `tel_name` varchar(255) NOT NULL,
+  `tel_num` varchar(255) NOT NULL,
+  `enable` tinyint(1) DEFAULT '0',
+  `uid_master` int(11) NOT NULL,
+  `image` mediumtext,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8
+
+ CREATE TABLE `orde` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `times` varchar(255) NOT NULL,
+  `timee` varchar(255) NOT NULL,
+  `n` int(11) NOT NULL,
+  `price` double NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8
+
+```
 
 
 
